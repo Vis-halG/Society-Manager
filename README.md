@@ -106,7 +106,13 @@ Scan the QR with Expo Go, or press `a` / `i` for an emulator/simulator. Camera-d
 
 ## Web Deployment
 
-This project is deployed as an Expo web export on Firebase Hosting.
+This project exports as a static Expo web app. Vercel should build it with `npm run build` and serve the `dist` directory.
+
+```bash
+npm run build
+```
+
+Firebase Hosting uses the same export:
 
 ```bash
 npm run build:web
