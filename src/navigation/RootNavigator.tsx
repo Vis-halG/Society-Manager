@@ -1,0 +1,63 @@
+import React, { useEffect } from 'react';
+import { AppState } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useAuth } from '../context/AuthContext';
+import { useAppTheme } from '../context/ThemeContext';
+import { LoadingOverlay } from '../components/common/LoadingOverlay';
+import { AuthNavigator } from './AuthNavigator';
+import { MainDrawerNavigator } from './MainDrawerNavigator';
+import { SecurityDrawerNavigator } from './SecurityDrawerNavigator';
+import { SuperAdminDrawerNavigator } from './SuperAdminDrawerNavigator';
+import { EmailVerificationScreen } from '../screens/auth/EmailVerificationScreen';
+import { PendingApprovalScreen } from '../screens/auth/PendingApprovalScreen';
+import { setUserOnlineStatus } from '../services/chat.service';
+import { registerForPushNotificationsAsync } from '../services/notifications.service';
+
+const Stack = createNativeStackNavigator();
+
+function GateNavigator({ component }: { component: React.ComponentType }) {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Gate" component={component} />
+    </Stack.Navigator>
+  );
+}
+
+export function RootNavigator() {
+  const { firebaseUser, user, initializing } = useAuth();
+  const { navTheme } = useAppTheme();
+
+  useEffect(() => {
+    if (!user || user.approvalStatus !== 'approved') return;
+    setUserOnlineStatus(user.id, true);
+    registerForPushNotificationsAsync(user.id).catch(() => undefined);
+    const subscription = AppState.addEventListener('change', (state) => {
+      setUserOnlineStatus(user.id, state === 'active');
+    });
+    return () => {
+      subscription.remove();
+      setUserOnlineStatus(user.id, false);
+    };
+  }, [user?.id, user?.approvalStatus]);
+
+  let content: React.ReactNode;
+
+  if (initializing) {
+    content = <LoadingOverlay label="Loading..." />;
+  } else if (!firebaseUser) {
+    content = <AuthNavigator />;
+  } else if (!firebaseUser.emailVerified) {
+    content = <GateNavigator component={EmailVerificationScreen} />;
+  } else if (!user || user.approvalStatus !== 'approved') {
+    content = <GateNavigator component={PendingApprovalScreen} />;
+  } else if (user.role === 'security') {
+    content = <SecurityDrawerNavigator />;
+  } else if (user.role === 'super_admin') {
+    content = <SuperAdminDrawerNavigator />;
+  } else {
+    content = <MainDrawerNavigator />;
+  }
+
+  return <NavigationContainer theme={navTheme}>{content}</NavigationContainer>;
+}
