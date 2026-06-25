@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, HelperText } from 'react-native-paper';
 import { Controller, type Control, type FieldValues, type Path } from 'react-hook-form';
+import { useAppTheme } from '../../context/ThemeContext';
 
 interface FormInputProps<T extends FieldValues> {
   control: Control<T>;
@@ -30,6 +31,8 @@ export function FormInput<T extends FieldValues>({
   disabled,
   autoCapitalize = 'sentences',
 }: FormInputProps<T>) {
+  const { colors } = useAppTheme();
+
   return (
     <Controller
       control={control}
@@ -51,6 +54,19 @@ export function FormInput<T extends FieldValues>({
             disabled={disabled}
             autoCapitalize={autoCapitalize}
             error={!!error}
+            textColor={colors.text}
+            placeholderTextColor={colors.textMuted}
+            outlineColor={colors.border}
+            activeOutlineColor={colors.primary}
+            outlineStyle={styles.outline}
+            style={[styles.input, { backgroundColor: colors.input }]}
+            theme={{
+              colors: {
+                background: colors.input,
+                onSurfaceVariant: colors.textMuted,
+                surfaceVariant: colors.input,
+              },
+            }}
           />
           {error?.message ? (
             <HelperText type="error">{String(error.message)}</HelperText>
@@ -63,6 +79,13 @@ export function FormInput<T extends FieldValues>({
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginBottom: 8,
+    marginBottom: 10,
+  },
+  input: {
+    overflow: 'hidden',
+  },
+  outline: {
+    borderRadius: 8,
+    borderWidth: 1,
   },
 });

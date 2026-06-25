@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAppTheme } from '../../context/ThemeContext';
+import { GlassSurface } from '../common/GlassSurface';
 
 interface StatCardProps {
   icon: keyof typeof MaterialCommunityIcons.glyphMap;
@@ -18,36 +19,40 @@ export function StatCard({ icon, label, value, color, onPress }: StatCardProps) 
 
   return (
     <TouchableOpacity
-      style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}
+      style={styles.touch}
       onPress={onPress}
       disabled={!onPress}
-      activeOpacity={0.7}
+      activeOpacity={0.78}
     >
-      <View style={[styles.iconWrap, { backgroundColor: `${accent}1A` }]}>
-        <MaterialCommunityIcons name={icon} size={22} color={accent} />
-      </View>
-      <Text variant="headlineSmall" style={[styles.value, { color: colors.text }]}>
-        {value}
-      </Text>
-      <Text variant="bodySmall" style={{ color: colors.textMuted }}>
-        {label}
-      </Text>
+      <GlassSurface style={styles.card} contentStyle={styles.content}>
+        <View style={[styles.iconWrap, { backgroundColor: `${accent}18`, borderColor: `${accent}36` }]}>
+          <MaterialCommunityIcons name={icon} size={22} color={accent} />
+        </View>
+        <Text variant="headlineSmall" style={[styles.value, { color: colors.text }]}>
+          {value}
+        </Text>
+        <Text variant="bodySmall" style={{ color: colors.textMuted }}>
+          {label}
+        </Text>
+      </GlassSurface>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
+  touch: {
     flexBasis: '48%',
-    borderRadius: 8,
-    borderWidth: 1,
-    padding: 14,
     marginBottom: 12,
   },
+  card: {
+    width: '100%',
+  },
+  content: { padding: 14 },
   iconWrap: {
     width: 36,
     height: 36,
     borderRadius: 8,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,

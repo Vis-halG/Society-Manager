@@ -26,7 +26,7 @@ export function StatusBadge({ status, label }: { status: string; label?: string 
   const color = colors[colorKey];
 
   return (
-    <View style={[styles.badge, { backgroundColor: `${color}1A`, borderColor: color }]}>
+    <View style={[styles.badge, { backgroundColor: `${color}18`, borderColor: `${color}40` }]}>
       <Text style={[styles.text, { color }]} variant="labelSmall">
         {label ?? status.replace(/_/g, ' ')}
       </Text>

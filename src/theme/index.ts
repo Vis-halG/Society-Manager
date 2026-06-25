@@ -20,13 +20,14 @@ export const spacing = {
 
 export const radius = {
   sm: 8,
-  md: 12,
-  lg: 16,
+  md: 8,
+  lg: 8,
   full: 999,
 };
 
 export const paperLightTheme: MD3Theme = {
   ...MD3LightTheme,
+  roundness: 8,
   colors: {
     ...MD3LightTheme.colors,
     primary: lightColors.primary,
@@ -39,6 +40,7 @@ export const paperLightTheme: MD3Theme = {
 
 export const paperDarkTheme: MD3Theme = {
   ...MD3DarkTheme,
+  roundness: 8,
   colors: {
     ...MD3DarkTheme.colors,
     primary: darkColors.primary,

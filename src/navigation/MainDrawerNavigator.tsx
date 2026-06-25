@@ -40,6 +40,16 @@ export function MainDrawerNavigator() {
         headerRight: () => <LogoutHeaderButton />,
         drawerActiveTintColor: colors.primary,
         drawerInactiveTintColor: colors.textMuted,
+        drawerActiveBackgroundColor: `${colors.primary}14`,
+        drawerStyle: {
+          backgroundColor: colors.surfaceStrong,
+          borderRightColor: colors.border,
+          width: 304,
+        },
+        sceneContainerStyle: { backgroundColor: colors.background },
+        headerStyle: { backgroundColor: colors.surfaceGlass },
+        headerTintColor: colors.text,
+        headerShadowVisible: false,
       }}
     >
       <Drawer.Screen
