@@ -3,6 +3,10 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/Society-Manager/:path*",
+      "destination": "/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
