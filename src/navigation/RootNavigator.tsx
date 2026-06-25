@@ -9,6 +9,7 @@ import { AuthNavigator } from './AuthNavigator';
 import { MainDrawerNavigator } from './MainDrawerNavigator';
 import { SecurityDrawerNavigator } from './SecurityDrawerNavigator';
 import { SuperAdminDrawerNavigator } from './SuperAdminDrawerNavigator';
+import { CompleteProfileScreen } from '../screens/auth/CompleteProfileScreen';
 import { EmailVerificationScreen } from '../screens/auth/EmailVerificationScreen';
 import { PendingApprovalScreen } from '../screens/auth/PendingApprovalScreen';
 import { setUserOnlineStatus } from '../services/chat.service';
@@ -49,6 +50,8 @@ export function RootNavigator() {
     content = <AuthNavigator />;
   } else if (!firebaseUser.emailVerified) {
     content = <GateNavigator component={EmailVerificationScreen} />;
+  } else if (!user) {
+    content = <GateNavigator component={CompleteProfileScreen} />;
   } else if (!user || user.approvalStatus !== 'approved') {
     content = <GateNavigator component={PendingApprovalScreen} />;
   } else if (user.role === 'security') {

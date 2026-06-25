@@ -7,10 +7,12 @@ import React, {
 } from 'react';
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   onAuthStateChanged,
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut as firebaseSignOut,
   updatePassword,
   type User as FirebaseUser,
@@ -37,12 +39,22 @@ export interface RegisterInput {
   societyId: string;
 }
 
+export interface CompleteProfileInput {
+  fullName: string;
+  mobileNumber: string;
+  flatNumber: string;
+  wing: string;
+  societyId: string;
+}
+
 interface AuthContextValue {
   firebaseUser: FirebaseUser | null;
   user: AppUser | null;
   initializing: boolean;
   login: (email: string, password: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   register: (input: RegisterInput) => Promise<void>;
+  completeProfile: (input: CompleteProfileInput) => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   resendVerificationEmail: () => Promise<void>;
@@ -91,32 +103,57 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await signInWithEmailAndPassword(auth, email, password);
   };
 
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    await signInWithPopup(auth, provider);
+  };
+
+  const buildResidentProfile = (
+    input: CompleteProfileInput,
+    email: string,
+    emailVerified: boolean
+  ): Omit<AppUser, 'id'> => ({
+    fullName: input.fullName,
+    email,
+    mobileNumber: input.mobileNumber,
+    role: 'resident',
+    societyId: input.societyId || null,
+    flatNumber: input.flatNumber,
+    wing: input.wing,
+    profileImageUrl: null,
+    approvalStatus: 'pending',
+    emailVerified,
+    familyMembers: [],
+    fcmTokens: [],
+    isOnline: true,
+    lastSeen: serverTimestamp() as never,
+    createdAt: serverTimestamp() as never,
+    updatedAt: serverTimestamp() as never,
+  });
+
   const register = async (input: RegisterInput) => {
     const credential = await createUserWithEmailAndPassword(
       auth,
       input.email,
       input.password
     );
-    const newUser: Omit<AppUser, 'id'> = {
-      fullName: input.fullName,
-      email: input.email,
-      mobileNumber: input.mobileNumber,
-      role: 'resident',
-      societyId: input.societyId || null,
-      flatNumber: input.flatNumber,
-      wing: input.wing,
-      profileImageUrl: null,
-      approvalStatus: 'pending',
-      emailVerified: false,
-      familyMembers: [],
-      fcmTokens: [],
-      isOnline: true,
-      lastSeen: serverTimestamp() as never,
-      createdAt: serverTimestamp() as never,
-      updatedAt: serverTimestamp() as never,
-    };
+    const newUser = buildResidentProfile(input, input.email, false);
     await setDoc(doc(db, COLLECTIONS.USERS, credential.user.uid), newUser);
     await sendEmailVerification(credential.user);
+  };
+
+  const completeProfile = async (input: CompleteProfileInput) => {
+    const currentUser = auth.currentUser;
+    if (!currentUser?.email) {
+      throw new Error('You must be signed in before completing your profile.');
+    }
+    const newUser = buildResidentProfile(
+      input,
+      currentUser.email,
+      currentUser.emailVerified
+    );
+    await setDoc(doc(db, COLLECTIONS.USERS, currentUser.uid), newUser);
   };
 
   const logout = async () => {
@@ -162,7 +199,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user,
       initializing,
       login,
+      signInWithGoogle,
       register,
+      completeProfile,
       logout,
       resetPassword,
       resendVerificationEmail,
