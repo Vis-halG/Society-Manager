@@ -25,7 +25,12 @@ export function ChatBubble({ text, imageUrl, isOwn, senderName, createdAt, isRea
           styles.bubble,
           isOwn
             ? { backgroundColor: colors.primary, borderTopRightRadius: 4 }
-            : { backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderTopLeftRadius: 4 },
+            : {
+                backgroundColor: colors.surfaceGlass,
+                borderColor: colors.borderStrong,
+                borderWidth: 1,
+                borderTopLeftRadius: 4,
+              },
         ]}
       >
         {!isOwn && senderName ? (
@@ -58,7 +63,17 @@ const styles = StyleSheet.create({
   row: { marginBottom: 10, flexDirection: 'row' },
   rowOwn: { justifyContent: 'flex-end' },
   rowOther: { justifyContent: 'flex-start' },
-  bubble: { maxWidth: '78%', borderRadius: 14, paddingHorizontal: 12, paddingVertical: 8 },
+  bubble: {
+    maxWidth: '78%',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.08,
+    shadowRadius: 16,
+    elevation: 2,
+  },
   senderName: { marginBottom: 2, fontWeight: '600' },
   image: { width: 180, height: 180, borderRadius: 10, marginBottom: 6 },
   metaRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 4, marginTop: 4 },

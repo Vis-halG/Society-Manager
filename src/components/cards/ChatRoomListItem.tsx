@@ -5,6 +5,7 @@ import { useAppTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { formatRelative } from '../../utils/date';
+import { GlassSurface } from '../common/GlassSurface';
 import type { ChatRoom } from '../../types';
 
 export function ChatRoomListItem({ room, onPress }: { room: ChatRoom; onPress: () => void }) {
@@ -14,34 +15,41 @@ export function ChatRoomListItem({ room, onPress }: { room: ChatRoom; onPress: (
   const otherUser = useUserProfile(otherUserId);
 
   return (
-    <TouchableOpacity style={styles.row} onPress={onPress} activeOpacity={0.7}>
-      <View>
-        {otherUser?.profileImageUrl ? (
-          <Avatar.Image size={48} source={{ uri: otherUser.profileImageUrl }} />
-        ) : (
-          <Avatar.Text size={48} label={(otherUser?.fullName ?? '?').slice(0, 2).toUpperCase()} />
-        )}
-        {otherUser?.isOnline ? (
-          <View style={[styles.onlineDot, { backgroundColor: colors.success, borderColor: colors.surface }]} />
-        ) : null}
-      </View>
-      <View style={styles.flex1}>
-        <Text variant="titleMedium" numberOfLines={1} style={{ color: colors.text }}>
-          {otherUser?.fullName ?? 'Loading...'}
+    <TouchableOpacity style={styles.touch} onPress={onPress} activeOpacity={0.78}>
+      <GlassSurface contentStyle={styles.row}>
+        <View>
+          {otherUser?.profileImageUrl ? (
+            <Avatar.Image size={48} source={{ uri: otherUser.profileImageUrl }} />
+          ) : (
+            <Avatar.Text
+              size={48}
+              label={(otherUser?.fullName ?? '?').slice(0, 2).toUpperCase()}
+              style={{ backgroundColor: colors.primary }}
+            />
+          )}
+          {otherUser?.isOnline ? (
+            <View style={[styles.onlineDot, { backgroundColor: colors.success, borderColor: colors.surfaceStrong }]} />
+          ) : null}
+        </View>
+        <View style={styles.flex1}>
+          <Text variant="titleMedium" numberOfLines={1} style={{ color: colors.text }}>
+            {otherUser?.fullName ?? 'Loading...'}
+          </Text>
+          <Text variant="bodySmall" numberOfLines={1} style={{ color: colors.textMuted }}>
+            {room.lastMessage || 'Start the conversation'}
+          </Text>
+        </View>
+        <Text variant="labelSmall" style={{ color: colors.textMuted }}>
+          {formatRelative(room.lastMessageAt)}
         </Text>
-        <Text variant="bodySmall" numberOfLines={1} style={{ color: colors.textMuted }}>
-          {room.lastMessage || 'Start the conversation'}
-        </Text>
-      </View>
-      <Text variant="labelSmall" style={{ color: colors.textMuted }}>
-        {formatRelative(room.lastMessageAt)}
-      </Text>
+      </GlassSurface>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 10 },
+  touch: { marginBottom: 12 },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12 },
   flex1: { flex: 1 },
   onlineDot: {
     position: 'absolute',

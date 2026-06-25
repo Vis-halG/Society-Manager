@@ -1,8 +1,9 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 import { BarChart } from 'react-native-chart-kit';
 import { useAppTheme } from '../../context/ThemeContext';
+import { GlassSurface } from '../common/GlassSurface';
 import { COMPLAINT_STATUS_LABELS } from '../../constants';
 
 interface Props {
@@ -14,7 +15,7 @@ export function ComplaintBreakdownChart({ data }: Props) {
   const screenWidth = Dimensions.get('window').width - 32;
 
   return (
-    <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+    <GlassSurface style={styles.shell} contentStyle={styles.card}>
       <Text variant="titleMedium" style={[styles.title, { color: colors.text }]}>
         Complaints by Status
       </Text>
@@ -30,8 +31,9 @@ export function ComplaintBreakdownChart({ data }: Props) {
         fromZero
         showValuesOnTopOfBars
         chartConfig={{
-          backgroundGradientFrom: colors.surface,
-          backgroundGradientTo: colors.surface,
+          backgroundGradientFrom: 'transparent',
+          backgroundGradientTo: 'transparent',
+          backgroundColor: 'transparent',
           decimalPlaces: 0,
           color: () => colors.primary,
           labelColor: () => colors.textMuted,
@@ -39,12 +41,13 @@ export function ComplaintBreakdownChart({ data }: Props) {
         }}
         style={styles.chart}
       />
-    </View>
+    </GlassSurface>
   );
 }
 
 const styles = StyleSheet.create({
-  card: { borderRadius: 16, borderWidth: 1, padding: 12, marginBottom: 16 },
+  shell: { marginBottom: 16 },
+  card: { padding: 12 },
   title: { fontWeight: '700', marginBottom: 4 },
-  chart: { borderRadius: 12 },
+  chart: { borderRadius: 8 },
 });

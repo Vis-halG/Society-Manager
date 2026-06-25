@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { StatCard } from '../../components/cards/StatCard';
 import { ComplaintBreakdownChart } from '../../components/cards/ComplaintBreakdownChart';
@@ -152,20 +153,22 @@ export function DashboardScreen({ navigation }: Props) {
         {quickActions.map((action) => (
           <TouchableOpacity
             key={action.title}
-            style={[styles.actionCard, { backgroundColor: colors.surface, borderColor: colors.border }]}
+            style={styles.actionCard}
             onPress={action.onPress}
-            activeOpacity={0.72}
+            activeOpacity={0.78}
             accessibilityRole="button"
           >
-            <View style={[styles.actionIcon, { backgroundColor: `${action.color}14` }]}>
-              <MaterialCommunityIcons name={action.icon} size={22} color={action.color} />
-            </View>
-            <Text numberOfLines={1} style={[styles.actionTitle, { color: colors.text }]}>
-              {action.title}
-            </Text>
-            <Text numberOfLines={1} style={{ color: colors.textMuted }}>
-              {action.description}
-            </Text>
+            <GlassSurface contentStyle={styles.actionContent}>
+              <View style={[styles.actionIcon, { backgroundColor: `${action.color}18`, borderColor: `${action.color}32` }]}>
+                <MaterialCommunityIcons name={action.icon} size={22} color={action.color} />
+              </View>
+              <Text numberOfLines={1} style={[styles.actionTitle, { color: colors.text }]}>
+                {action.title}
+              </Text>
+              <Text numberOfLines={1} style={{ color: colors.textMuted }}>
+                {action.description}
+              </Text>
+            </GlassSurface>
           </TouchableOpacity>
         ))}
       </View>
@@ -250,15 +253,14 @@ const styles = StyleSheet.create({
   actionCard: {
     flexBasis: '48%',
     minHeight: 104,
-    borderRadius: 8,
-    borderWidth: 1,
-    padding: 14,
     marginBottom: 12,
   },
+  actionContent: { minHeight: 104, padding: 14 },
   actionIcon: {
     width: 36,
     height: 36,
     borderRadius: 8,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
