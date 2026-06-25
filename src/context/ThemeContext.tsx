@@ -1,13 +1,8 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { useColorScheme } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useContext, useMemo } from 'react';
 import {
   paperLightTheme,
-  paperDarkTheme,
   navLightTheme,
-  navDarkTheme,
   lightColors,
-  darkColors,
   type AppColors,
 } from '../theme';
 
@@ -22,39 +17,19 @@ interface ThemeContextValue {
   setMode: (mode: ThemeMode) => void;
 }
 
-const STORAGE_KEY = 'theme_mode';
-
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const systemScheme = useColorScheme();
-  const [mode, setModeState] = useState<ThemeMode>('system');
-
-  useEffect(() => {
-    AsyncStorage.getItem(STORAGE_KEY).then((saved) => {
-      if (saved === 'light' || saved === 'dark' || saved === 'system') {
-        setModeState(saved);
-      }
-    });
-  }, []);
-
-  const setMode = (newMode: ThemeMode) => {
-    setModeState(newMode);
-    AsyncStorage.setItem(STORAGE_KEY, newMode).catch(() => undefined);
-  };
-
-  const isDark = mode === 'system' ? systemScheme === 'dark' : mode === 'dark';
-
   const value = useMemo<ThemeContextValue>(
     () => ({
-      mode,
-      isDark,
-      colors: isDark ? darkColors : lightColors,
-      paperTheme: isDark ? paperDarkTheme : paperLightTheme,
-      navTheme: isDark ? navDarkTheme : navLightTheme,
-      setMode,
+      mode: 'light',
+      isDark: false,
+      colors: lightColors,
+      paperTheme: paperLightTheme,
+      navTheme: navLightTheme,
+      setMode: () => undefined,
     }),
-    [mode, isDark]
+    []
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

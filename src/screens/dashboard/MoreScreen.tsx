@@ -15,8 +15,8 @@ export function MoreScreen(_props: Props) {
   const isAdmin = user?.role === 'admin';
 
   return (
-    <ScreenContainer>
-      <List.Section>
+    <ScreenContainer scroll>
+      <List.Section title="Daily">
         <List.Item
           title="Maintenance"
           left={(p) => <List.Icon {...p} icon="cash-multiple" />}
@@ -32,6 +32,14 @@ export function MoreScreen(_props: Props) {
           left={(p) => <List.Icon {...p} icon="car" />}
           onPress={() => drawerNavigation.navigate('Parking')}
         />
+        <List.Item
+          title="Emergency Contacts"
+          left={(p) => <List.Icon {...p} icon="phone-alert-outline" />}
+          onPress={() => drawerNavigation.navigate('EmergencyContacts')}
+        />
+      </List.Section>
+
+      <List.Section title="Community">
         <List.Item
           title="Polls"
           left={(p) => <List.Icon {...p} icon="poll" />}
@@ -52,25 +60,24 @@ export function MoreScreen(_props: Props) {
           left={(p) => <List.Icon {...p} icon="bell-outline" />}
           onPress={() => drawerNavigation.navigate('Notifications')}
         />
-        <List.Item
-          title="Emergency Contacts"
-          left={(p) => <List.Icon {...p} icon="phone-alert-outline" />}
-          onPress={() => drawerNavigation.navigate('EmergencyContacts')}
-        />
-        {isAdmin ? (
+      </List.Section>
+
+      {isAdmin ? (
+        <List.Section title="Admin">
           <List.Item
             title="Resident Approvals"
             left={(p) => <List.Icon {...p} icon="account-check-outline" />}
             onPress={() => drawerNavigation.navigate('ResidentApprovals')}
           />
-        ) : null}
-        {isAdmin ? (
           <List.Item
-            title="Reports & Analytics"
+            title="Reports"
             left={(p) => <List.Icon {...p} icon="chart-bar" />}
             onPress={() => drawerNavigation.navigate('Reports')}
           />
-        ) : null}
+        </List.Section>
+      ) : null}
+
+      <List.Section title="Account">
         <List.Item
           title="Profile & Settings"
           left={(p) => <List.Icon {...p} icon="account-circle-outline" />}

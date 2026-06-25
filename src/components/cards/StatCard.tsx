@@ -39,7 +39,7 @@ export function StatCard({ icon, label, value, color, onPress }: StatCardProps) 
 const styles = StyleSheet.create({
   card: {
     flexBasis: '48%',
-    borderRadius: 16,
+    borderRadius: 8,
     borderWidth: 1,
     padding: 14,
     marginBottom: 12,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   iconWrap: {
     width: 36,
     height: 36,
-    borderRadius: 10,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,

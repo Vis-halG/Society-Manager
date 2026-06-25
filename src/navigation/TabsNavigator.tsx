@@ -34,11 +34,11 @@ export function TabsNavigator() {
         ),
       })}
     >
-      <Tab.Screen name="Dashboard" component={DashboardScreen} />
+      <Tab.Screen name="Dashboard" component={DashboardScreen} options={{ title: 'Home' }} />
       <Tab.Screen name="Notices" component={NoticesNavigator} />
       <Tab.Screen name="Complaints" component={ComplaintsNavigator} />
       <Tab.Screen name="Chat" component={ChatNavigator} />
-      <Tab.Screen name="More" component={MoreScreen} />
+      <Tab.Screen name="More" component={MoreScreen} options={{ title: 'Menu' }} />
     </Tab.Navigator>
   );
 }
