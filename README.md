@@ -50,20 +50,20 @@ Roles are stored on the `users/{uid}` document (`role` field) and enforced both 
 
 ## Demo Login Details and Accessible Modules
 
-These demo logins must exist in Firebase Authentication and must have matching `users/{uid}` Firestore documents. They are not created automatically by the app.
+These demo logins exist in Firebase project `mgmt-95506` and have matching approved `users/{uid}` Firestore documents. Society Admin, Resident, and Security are assigned to `demo-society`; Super Admin has `societyId: null`.
 
-Checked against Firebase project `mgmt-95506` on `2026-06-25`: all four emails with password `Demo@123456` returned `INVALID_LOGIN_CREDENTIALS`, so the accounts currently cannot be used until they are created or their passwords are reset in Firebase Authentication.
+Checked and verified on `2026-06-25`: all four emails below sign in successfully with password `Demo@123456`.
 
-> Use these credentials as the demo accounts to create/reset in Firebase. Do not keep demo passwords in a production Firebase project.
+> These credentials are for local/demo testing only. Change or remove them before using a live Firebase project.
 
-| User type | Login ID / Email | Password to set/reset | Current Firebase login status | Firestore role | Accessible modules |
+| User type | Login ID / Email | Password | Firebase login status | Firestore role | Accessible modules |
 |---|---|---|---|---|---|
-| Super Admin | `superadmin@societymanager.demo` | `Demo@123456` | Fails now: `INVALID_LOGIN_CREDENTIALS` | `super_admin` | Societies, Manage Society Admins, Reports & Analytics, Profile & Settings |
-| Society Admin | `admin@societymanager.demo` | `Demo@123456` | Fails now: `INVALID_LOGIN_CREDENTIALS` | `admin` | Dashboard, Notices, Complaints, Chat, Maintenance, Visitors, Parking, Polls, Events, Documents, Notifications, Emergency Contacts, Resident Approvals, Reports & Analytics, Profile & Settings |
-| Resident | `resident@societymanager.demo` | `Demo@123456` | Fails now: `INVALID_LOGIN_CREDENTIALS` | `resident` | Dashboard, Notices, Complaints, Chat, Maintenance, Visitors, Parking, Polls, Events, Documents, Notifications, Emergency Contacts, Profile & Settings |
-| Security | `security@societymanager.demo` | `Demo@123456` | Fails now: `INVALID_LOGIN_CREDENTIALS` | `security` | Visitor Gate, QR Scan, Visitor Check-in/Check-out, Visitor History, Profile & Settings |
+| Super Admin | `superadmin@societymanager.demo` | `Demo@123456` | Verified working | `super_admin` | Societies, Manage Society Admins, Reports & Analytics, Profile & Settings |
+| Society Admin | `admin@societymanager.demo` | `Demo@123456` | Verified working | `admin` | Dashboard, Notices, Complaints, Chat, Maintenance, Visitors, Parking, Polls, Events, Documents, Notifications, Emergency Contacts, Resident Approvals, Reports & Analytics, Profile & Settings |
+| Resident | `resident@societymanager.demo` | `Demo@123456` | Verified working | `resident` | Dashboard, Notices, Complaints, Chat, Maintenance, Visitors, Parking, Polls, Events, Documents, Notifications, Emergency Contacts, Profile & Settings |
+| Security | `security@societymanager.demo` | `Demo@123456` | Verified working | `security` | Visitor Gate, QR Scan, Visitor Check-in/Check-out, Visitor History, Profile & Settings |
 
-### How to Make Demo Login Work
+### If Demo Login Stops Working
 
 1. Open Firebase Console → Authentication → Users.
 2. Create each email above, or reset the password for the existing account to `Demo@123456`.
