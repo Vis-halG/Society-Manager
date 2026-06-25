@@ -4,13 +4,14 @@ import { ComplaintListScreen } from '../screens/complaints/ComplaintListScreen';
 import { ComplaintDetailScreen } from '../screens/complaints/ComplaintDetailScreen';
 import { ComplaintFormScreen } from '../screens/complaints/ComplaintFormScreen';
 import { ComplaintChatScreen } from '../screens/complaints/ComplaintChatScreen';
+import { LogoutHeaderButton } from '../components/common/LogoutHeaderButton';
 import type { ComplaintsStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<ComplaintsStackParamList>();
 
 export function ComplaintsNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerRight: () => <LogoutHeaderButton /> }}>
       <Stack.Screen name="ComplaintList" component={ComplaintListScreen} options={{ title: 'Complaints' }} />
       <Stack.Screen name="ComplaintDetail" component={ComplaintDetailScreen} options={{ title: 'Complaint' }} />
       <Stack.Screen name="ComplaintForm" component={ComplaintFormScreen} options={{ title: 'Raise Complaint' }} />

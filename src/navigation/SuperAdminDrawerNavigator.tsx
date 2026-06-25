@@ -5,6 +5,7 @@ import { SuperAdminNavigator } from './SuperAdminNavigator';
 import { ReportsScreen } from '../screens/admin/ReportsScreen';
 import { ProfileNavigator } from './ProfileNavigator';
 import { CustomDrawerContent } from './CustomDrawerContent';
+import { LogoutHeaderButton } from '../components/common/LogoutHeaderButton';
 import { useAppTheme } from '../context/ThemeContext';
 import type { RootDrawerParamList } from './types';
 
@@ -23,6 +24,7 @@ export function SuperAdminDrawerNavigator() {
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
+        headerRight: () => <LogoutHeaderButton />,
         drawerActiveTintColor: colors.primary,
         drawerInactiveTintColor: colors.textMuted,
       }}

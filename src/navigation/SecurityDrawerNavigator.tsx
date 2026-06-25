@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { VisitorsNavigator } from './VisitorsNavigator';
 import { ProfileNavigator } from './ProfileNavigator';
 import { CustomDrawerContent } from './CustomDrawerContent';
+import { LogoutHeaderButton } from '../components/common/LogoutHeaderButton';
 import { useAppTheme } from '../context/ThemeContext';
 import type { RootDrawerParamList } from './types';
 
@@ -23,6 +24,7 @@ export function SecurityDrawerNavigator() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: true,
+        headerRight: () => <LogoutHeaderButton />,
         drawerActiveTintColor: colors.primary,
         drawerInactiveTintColor: colors.textMuted,
       }}

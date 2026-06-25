@@ -14,6 +14,7 @@ import { NotificationsScreen } from '../screens/notifications/NotificationsScree
 import { ResidentApprovalsScreen } from '../screens/admin/ResidentApprovalsScreen';
 import { ReportsScreen } from '../screens/admin/ReportsScreen';
 import { CustomDrawerContent } from './CustomDrawerContent';
+import { LogoutHeaderButton } from '../components/common/LogoutHeaderButton';
 import { useAuth } from '../context/AuthContext';
 import { useAppTheme } from '../context/ThemeContext';
 import type { RootDrawerParamList } from './types';
@@ -36,6 +37,7 @@ export function MainDrawerNavigator() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: false,
+        headerRight: () => <LogoutHeaderButton />,
         drawerActiveTintColor: colors.primary,
         drawerInactiveTintColor: colors.textMuted,
       }}
