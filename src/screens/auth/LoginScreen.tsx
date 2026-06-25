@@ -155,12 +155,16 @@ export function mapAuthError(err: unknown): string {
     case 'auth/operation-not-allowed':
       return 'Google login is not enabled for this Firebase project yet.';
     case 'auth/unauthorized-domain':
-      return 'This domain is not authorized for Google login in Firebase.';
+      return 'This domain is not authorized in Firebase Authentication settings.';
+    case 'auth/operation-not-supported-in-this-environment':
+      return 'Google login is available on web in this build. Use email login on mobile.';
     case 'auth/popup-closed-by-user':
     case 'auth/cancelled-popup-request':
       return 'Google login was cancelled.';
     case 'auth/popup-blocked':
-      return 'Popup was blocked. Allow popups and try again.';
+      return 'Popup was blocked. Redirecting to Google sign-in did not complete.';
+    case 'auth/web-storage-unsupported':
+      return 'Browser storage is disabled. Enable cookies/local storage and try again.';
     case 'auth/weak-password':
       return 'Password should be at least 6 characters.';
     case 'auth/too-many-requests':

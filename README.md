@@ -48,6 +48,37 @@ firebase.json             Points the Firebase CLI at the Spark-safe Firestore ru
 
 Roles are stored on the `users/{uid}` document (`role` field) and enforced both in the UI (`RootNavigator` picks the navigator tree per role) and in `firestore.rules` (server-side enforcement — never trust the client alone).
 
+## Demo Login Details and Accessible Modules
+
+These demo logins must exist in Firebase Authentication and must have matching `users/{uid}` Firestore documents. They are not created automatically by the app.
+
+Checked against Firebase project `mgmt-95506` on `2026-06-25`: all four emails with password `Demo@123456` returned `INVALID_LOGIN_CREDENTIALS`, so the accounts currently cannot be used until they are created or their passwords are reset in Firebase Authentication.
+
+> Use these credentials as the demo accounts to create/reset in Firebase. Do not keep demo passwords in a production Firebase project.
+
+| User type | Login ID / Email | Password to set/reset | Current Firebase login status | Firestore role | Accessible modules |
+|---|---|---|---|---|---|
+| Super Admin | `superadmin@societymanager.demo` | `Demo@123456` | Fails now: `INVALID_LOGIN_CREDENTIALS` | `super_admin` | Societies, Manage Society Admins, Reports & Analytics, Profile & Settings |
+| Society Admin | `admin@societymanager.demo` | `Demo@123456` | Fails now: `INVALID_LOGIN_CREDENTIALS` | `admin` | Dashboard, Notices, Complaints, Chat, Maintenance, Visitors, Parking, Polls, Events, Documents, Notifications, Emergency Contacts, Resident Approvals, Reports & Analytics, Profile & Settings |
+| Resident | `resident@societymanager.demo` | `Demo@123456` | Fails now: `INVALID_LOGIN_CREDENTIALS` | `resident` | Dashboard, Notices, Complaints, Chat, Maintenance, Visitors, Parking, Polls, Events, Documents, Notifications, Emergency Contacts, Profile & Settings |
+| Security | `security@societymanager.demo` | `Demo@123456` | Fails now: `INVALID_LOGIN_CREDENTIALS` | `security` | Visitor Gate, QR Scan, Visitor Check-in/Check-out, Visitor History, Profile & Settings |
+
+### How to Make Demo Login Work
+
+1. Open Firebase Console → Authentication → Users.
+2. Create each email above, or reset the password for the existing account to `Demo@123456`.
+3. For each Firebase Auth user, copy the `uid`.
+4. In Firestore, create/update `users/{uid}` with `role`, `approvalStatus: "approved"`, and the required profile fields.
+5. Set `societyId: null` only for Super Admin. Set a valid society document ID for Society Admin, Resident, and Security.
+
+### Role Access Details
+
+- **Super Admin** can create and edit societies, view all society records, assign or remove Society Admin users, view platform-level reports, and manage their own profile.
+- **Society Admin** can approve or reject residents, make approved users Security users, publish notices, handle complaints, generate maintenance bills, view defaulters, manage visitor records, create parking slots, allocate parking, create polls/events/documents/emergency contacts, use chat, view notifications, and open society reports.
+- **Resident** can view society notices, create and track complaints, chat with the society admin, view/pay maintenance bills, create visitor passes, register vehicles, vote in polls, view events/documents/emergency contacts, read notifications, manage family/profile details, and change password.
+- **Security** can access the visitor gate flow only: scan visitor QR codes, approve/reject gate entries, check visitors in/out, view visitor history, and manage their own profile.
+- **Pending or rejected users** cannot access the main app modules. They are routed to the pending approval screen until a Society Admin approves them.
+
 ## Getting Started
 
 ### 1. Install dependencies
@@ -60,8 +91,9 @@ npm install
 
 1. Go to the [Firebase console](https://console.firebase.google.com/) → **Add project**.
 2. **Authentication** → Sign-in method → enable **Email/Password**.
-3. **Firestore Database** → Create database (start in production mode — rules are provided below).
-4. **Project settings → General → Your apps** → add a **Web app** (Expo uses the Firebase JS SDK even on native) and copy the config values.
+3. For Google login on web, **Authentication** → Sign-in method → enable **Google** and add your app domains under **Authentication** → **Settings** → **Authorized domains**. For local testing this usually includes `localhost`; for deployment add domains such as `mgmt-95506.web.app` or your Vercel domain.
+4. **Firestore Database** → Create database (start in production mode — rules are provided below).
+5. **Project settings → General → Your apps** → add a **Web app** (Expo uses the Firebase JS SDK even on native) and copy the config values.
 
 ### 3. Configure environment variables
 
@@ -83,6 +115,10 @@ firebase deploy --only firestore:rules,firestore:indexes
 ### Spark plan file attachments
 
 Firebase Storage buckets are not part of the default Spark setup for this app. With `EXPO_PUBLIC_USE_FIREBASE_STORAGE=false`, image/document pickers store local device URIs in Firestore metadata so the app can run without Blaze. Those local attachments are useful for testing on the current device only; cross-device cloud attachments require enabling Firebase Storage on Blaze or wiring another storage provider.
+
+### Google login support
+
+Google login is currently implemented for the web build through Firebase Authentication. If popups are blocked, the app falls back to Firebase's redirect flow. Native Android/iOS Google login requires a development build and a native Google sign-in package such as `@react-native-google-signin/google-signin`; it will not work inside Expo Go without that extra native setup.
 
 ### 5. Bootstrap the first Super Admin
 
