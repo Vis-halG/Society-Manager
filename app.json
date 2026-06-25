@@ -33,6 +33,9 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "experiments": {
+      "baseUrl": "/Society-Manager"
+    },
     "plugins": [
       "expo-sharing",
       [
