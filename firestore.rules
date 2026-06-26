@@ -76,10 +76,16 @@ service cloud.firestore {
     match /users/{userId} {
       allow get: if isSignedIn() && (request.auth.uid == userId || isSuperAdmin() ||
                     (isApproved() && (role() == 'admin' || role() == 'security') &&
-                     societyId() == resource.data.societyId));
+                     societyId() == resource.data.societyId) ||
+                    (isApproved() && role() == 'resident' &&
+                     societyId() == resource.data.societyId &&
+                     resource.data.role == 'admin'));
       allow list: if isSuperAdmin() ||
                     (isApproved() && (role() == 'admin' || role() == 'security') &&
-                     resource.data.societyId == societyId());
+                     resource.data.societyId == societyId()) ||
+                    (isApproved() && role() == 'resident' &&
+                     resource.data.societyId == societyId() &&
+                     resource.data.role == 'admin');
       allow create: if isSignedIn() && request.auth.uid == userId &&
                       request.resource.data.role == 'resident' &&
                       request.resource.data.approvalStatus == 'pending';

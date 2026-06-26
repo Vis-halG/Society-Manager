@@ -2,8 +2,10 @@ import {
   collection,
   getCountFromServer,
   getDocs,
+  orderBy,
   query,
   where,
+  type QueryConstraint,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { COLLECTIONS } from '../constants';
@@ -25,7 +27,7 @@ export interface AdminDashboardStats extends ResidentDashboardStats {
   defaulterCount: number;
 }
 
-async function count(colName: string, ...constraints: ReturnType<typeof where>[]) {
+async function count(colName: string, ...constraints: QueryConstraint[]) {
   const snap = await getCountFromServer(
     query(collection(db, colName), ...constraints)
   );
@@ -46,7 +48,12 @@ export async function getResidentDashboardStats(
         where('raisedBy', '==', userId),
         where('status', 'in', ['open', 'assigned', 'in_progress'])
       ),
-      count(COLLECTIONS.EVENTS, where('societyId', '==', societyId), where('startAt', '>=', now)),
+      count(
+        COLLECTIONS.EVENTS,
+        where('societyId', '==', societyId),
+        where('startAt', '>=', now),
+        orderBy('startAt', 'desc')
+      ),
       count(
         COLLECTIONS.MAINTENANCE_BILLS,
         where('societyId', '==', societyId),
@@ -81,7 +88,12 @@ export async function getAdminDashboardStats(societyId: string): Promise<AdminDa
   ] = await Promise.all([
     count(COLLECTIONS.NOTICES, where('societyId', '==', societyId)),
     count(COLLECTIONS.COMPLAINTS, where('societyId', '==', societyId), where('status', 'in', ['open', 'assigned', 'in_progress'])),
-    count(COLLECTIONS.EVENTS, where('societyId', '==', societyId), where('startAt', '>=', now)),
+    count(
+      COLLECTIONS.EVENTS,
+      where('societyId', '==', societyId),
+      where('startAt', '>=', now),
+      orderBy('startAt', 'desc')
+    ),
     count(COLLECTIONS.MAINTENANCE_BILLS, where('societyId', '==', societyId), where('status', 'in', ['unpaid', 'overdue'])),
     count(COLLECTIONS.VISITORS, where('societyId', '==', societyId), where('status', '==', 'pending')),
     count(COLLECTIONS.POLLS, where('societyId', '==', societyId), where('isActive', '==', true)),

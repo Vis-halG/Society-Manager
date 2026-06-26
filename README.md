@@ -50,9 +50,9 @@ Roles are stored on the `users/{uid}` document (`role` field) and enforced both 
 
 ## Demo Login Details and Accessible Modules
 
-These demo logins exist in Firebase project `mgmt-95506` and have matching approved `users/{uid}` Firestore documents. Society Admin, Resident, and Security are assigned to `demo-society`; Super Admin has `societyId: null`.
+Only the four demo logins below are intentionally supported in Firebase project `mgmt-95506`, and each has a matching approved `users/{uid}` Firestore document. Society Admin, Resident, and Security are assigned to `demo-society`; Super Admin has `societyId: null`.
 
-Checked and verified on `2026-06-25`: all four emails below sign in successfully with password `Demo@123456`.
+Checked and verified on `2026-06-26`: all four emails below sign in successfully with password `Demo@123456`.
 
 > These credentials are for local/demo testing only. Change or remove them before using a live Firebase project.
 
