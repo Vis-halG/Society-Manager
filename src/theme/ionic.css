@@ -1,0 +1,68 @@
+:root {
+  --ion-font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ion-background-color: #eef6fa;
+  --ion-background-color-rgb: 238, 246, 250;
+  --ion-text-color: #0b1220;
+  --ion-text-color-rgb: 11, 18, 32;
+  --ion-color-primary: #1877f2;
+  --ion-color-primary-rgb: 24, 119, 242;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1569d5;
+  --ion-color-primary-tint: #2f85f3;
+  --ion-color-secondary: #13b8a6;
+  --ion-color-secondary-rgb: 19, 184, 166;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #11a292;
+  --ion-color-secondary-tint: #2bc0af;
+  --ion-color-success: #16a34a;
+  --ion-color-warning: #f59e0b;
+  --ion-color-danger: #e11d48;
+  --ion-color-medium: #5c6c82;
+  --ion-color-light: #f6fbf3;
+  --ion-toolbar-background: rgba(255, 255, 255, 0.72);
+  --ion-toolbar-color: #0b1220;
+  --ion-tab-bar-background: rgba(255, 255, 255, 0.72);
+  --ion-tab-bar-color: #5c6c82;
+  --ion-tab-bar-color-selected: #1877f2;
+  --ion-card-background: rgba(255, 255, 255, 0.64);
+  --ion-border-color: rgba(92, 108, 130, 0.24);
+  --ion-item-background: rgba(255, 255, 255, 0.7);
+  --ion-safe-area-top: env(safe-area-inset-top);
+  --ion-safe-area-bottom: env(safe-area-inset-bottom);
+  --ion-safe-area-left: env(safe-area-inset-left);
+  --ion-safe-area-right: env(safe-area-inset-right);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: var(--ion-background-color);
+}
+
+body {
+  margin: 0;
+  overscroll-behavior: none;
+}
+
+.sm-ionic-app,
+.sm-ionic-page,
+.sm-ionic-content {
+  background: var(--ion-background-color);
+}
+
+.sm-ionic-content::part(background) {
+  background: var(--ion-background-color);
+}
+
+.sm-ionic-content::part(scroll) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.sm-ionic-page {
+  contain: size style layout;
+}
