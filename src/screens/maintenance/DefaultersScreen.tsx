@@ -3,6 +3,7 @@ import { FlatList, Share, StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { collection, orderBy, query, where } from 'firebase/firestore';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { EmptyState } from '../../components/common/EmptyState';
 import { useAuth } from '../../context/AuthContext';
@@ -57,7 +58,7 @@ export function DefaultersScreen() {
         contentContainerStyle={bills.length === 0 ? styles.flex : undefined}
         ListEmptyComponent={<EmptyState icon="check-circle-outline" title="No defaulters" description="Everyone is up to date." />}
         renderItem={({ item }) => (
-          <View style={[styles.row, { borderColor: colors.border }]}>
+          <GlassSurface style={styles.rowShell} contentStyle={styles.row}>
             <View style={styles.flex1}>
               <Text style={{ color: colors.text, fontWeight: '600' }}>{item.flatNumber}</Text>
               <Text style={{ color: colors.textMuted }}>
@@ -65,7 +66,7 @@ export function DefaultersScreen() {
               </Text>
             </View>
             <Text style={{ color: colors.danger, fontWeight: '700' }}>₹{item.totalAmount}</Text>
-          </View>
+          </GlassSurface>
         )}
       />
     </ScreenContainer>
@@ -79,8 +80,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
+    padding: 12,
   },
+  rowShell: { marginBottom: 10 },
   flex1: { flex: 1 },
 });

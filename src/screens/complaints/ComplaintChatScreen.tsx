@@ -1,12 +1,11 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScreenContainer } from '../../components/common/ScreenContainer';
 import { ChatBubble } from '../../components/common/ChatBubble';
 import { ChatInputBar } from '../../components/common/ChatInputBar';
 import { EmptyState } from '../../components/common/EmptyState';
 import { useAuth } from '../../context/AuthContext';
-import { useAppTheme } from '../../context/ThemeContext';
 import { useCollection } from '../../hooks/useCollection';
 import { complaintMessagesQuery, sendComplaintMessage, type ComplaintMessage } from '../../services/complaints.service';
 import type { ComplaintsStackParamList } from '../../navigation/types';
@@ -16,7 +15,6 @@ type Props = NativeStackScreenProps<ComplaintsStackParamList, 'ComplaintChat'>;
 export function ComplaintChatScreen({ route }: Props) {
   const { complaintId } = route.params;
   const { user } = useAuth();
-  const { colors } = useAppTheme();
   const [sending, setSending] = useState(false);
   const listRef = useRef<FlatList>(null);
 
@@ -35,7 +33,7 @@ export function ComplaintChatScreen({ route }: Props) {
   };
 
   return (
-    <SafeAreaView style={[styles.flex, { backgroundColor: colors.background }]} edges={['left', 'right', 'bottom']}>
+    <ScreenContainer padded={false}>
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -62,7 +60,7 @@ export function ComplaintChatScreen({ route }: Props) {
         />
         <ChatInputBar onSend={handleSend} sending={sending} />
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </ScreenContainer>
   );
 }
 

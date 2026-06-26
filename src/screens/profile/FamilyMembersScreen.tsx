@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Button, Card, Dialog, IconButton, Portal, Text } from 'react-native-paper';
+import { Button, Dialog, IconButton, Portal, Text } from 'react-native-paper';
 import { useForm } from 'react-hook-form';
 import { FlatList } from 'react-native';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { EmptyState } from '../../components/common/EmptyState';
 import { FormInput } from '../../components/common/FormInput';
 import { useAuth } from '../../context/AuthContext';
@@ -69,19 +70,17 @@ export function FamilyMembersScreen() {
           <EmptyState icon="account-group-outline" title="No family members added" />
         }
         renderItem={({ item }) => (
-          <Card style={styles.card} mode="outlined">
-            <Card.Content style={styles.cardRow}>
-              <View style={styles.flex1}>
-                <Text variant="titleMedium">{item.name}</Text>
-                <Text style={{ color: colors.textMuted }}>
-                  {item.relation}
-                  {item.age ? ` - ${item.age} yrs` : ''}
-                  {item.phone ? ` - ${item.phone}` : ''}
-                </Text>
-              </View>
-              <IconButton icon="delete-outline" onPress={() => removeMember(item.id)} />
-            </Card.Content>
-          </Card>
+          <GlassSurface style={styles.card} contentStyle={styles.cardRow}>
+            <View style={styles.flex1}>
+              <Text variant="titleMedium" style={{ color: colors.text }}>{item.name}</Text>
+              <Text style={{ color: colors.textMuted }}>
+                {item.relation}
+                {item.age ? ` - ${item.age} yrs` : ''}
+                {item.phone ? ` - ${item.phone}` : ''}
+              </Text>
+            </View>
+            <IconButton icon="delete-outline" onPress={() => removeMember(item.id)} />
+          </GlassSurface>
         )}
       />
 
@@ -114,6 +113,6 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   flex1: { flex: 1 },
   card: { marginBottom: 12 },
-  cardRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  cardRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 12 },
   addButton: { marginTop: 8 },
 });

@@ -4,6 +4,7 @@ import { Button, Dialog, Portal, RadioButton, Text } from 'react-native-paper';
 import { doc, getDoc } from 'firebase/firestore';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { StatusBadge } from '../../components/common/StatusBadge';
 import { useAuth } from '../../context/AuthContext';
@@ -85,6 +86,7 @@ export function BillDetailScreen({ route }: Props) {
         {bill.billMonth} maintenance for {bill.flatNumber}
       </Text>
 
+      <GlassSurface contentStyle={styles.detailsCard}>
       <View style={[styles.row, { borderColor: colors.border }]}>
         <Text style={{ color: colors.textMuted }}>Base Amount</Text>
         <Text style={{ color: colors.text }}>₹{bill.amount}</Text>
@@ -103,6 +105,7 @@ export function BillDetailScreen({ route }: Props) {
           <Text style={{ color: colors.text }}>{formatDateTime(bill.paidAt)}</Text>
         </View>
       ) : null}
+      </GlassSurface>
 
       {bill.status !== 'paid' ? (
         <Button mode="contained" style={styles.actionBtn} onPress={() => setPayDialogVisible(true)}>
@@ -139,6 +142,7 @@ export function BillDetailScreen({ route }: Props) {
 const styles = StyleSheet.create({
   headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   title: { fontWeight: '700' },
+  detailsCard: { paddingHorizontal: 16 },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',

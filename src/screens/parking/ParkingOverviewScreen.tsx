@@ -4,6 +4,7 @@ import { Button, Dialog, FAB, Menu, Portal, SegmentedButtons, Text, TouchableRip
 import { useForm } from 'react-hook-form';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { EmptyState } from '../../components/common/EmptyState';
 import { StatCard } from '../../components/cards/StatCard';
@@ -77,7 +78,7 @@ export function ParkingOverviewScreen({ navigation }: Props) {
         scrollEnabled={false}
         ListEmptyComponent={<EmptyState icon="car-off" title="No vehicles registered" />}
         renderItem={({ item }) => (
-          <View style={[styles.vehicleRow, { borderColor: colors.border }]}>
+          <GlassSurface style={styles.vehicleRowShell} contentStyle={styles.vehicleRow}>
             <View style={styles.flex1}>
               <Text style={{ color: colors.text, fontWeight: '600' }}>{item.vehicleNumber}</Text>
               <Text style={{ color: colors.textMuted }}>
@@ -109,7 +110,7 @@ export function ParkingOverviewScreen({ navigation }: Props) {
             ) : (
               <Text style={{ color: colors.textMuted }}>Unassigned</Text>
             )}
-          </View>
+          </GlassSurface>
         )}
       />
 
@@ -156,9 +157,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
+    padding: 12,
   },
+  vehicleRowShell: { marginBottom: 10 },
   addSlotBtn: { marginTop: 16, marginBottom: 80 },
   fab: { position: 'absolute', right: 16, bottom: 16 },
 });

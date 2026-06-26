@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { Avatar, Button, Chip, Text } from 'react-native-paper';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { EmptyState } from '../../components/common/EmptyState';
 import { useAuth } from '../../context/AuthContext';
@@ -78,7 +79,7 @@ export function ResidentApprovalsScreen() {
           keyExtractor={(item) => item.id}
           scrollEnabled={false}
           renderItem={({ item }) => (
-            <View style={[styles.row, { borderColor: colors.border }]}>
+            <GlassSurface style={styles.rowShell} contentStyle={styles.row}>
               <Avatar.Text size={40} label={item.fullName.slice(0, 2).toUpperCase()} />
               <View style={styles.flex1}>
                 <Text style={{ color: colors.text, fontWeight: '600' }}>{item.fullName}</Text>
@@ -104,7 +105,7 @@ export function ResidentApprovalsScreen() {
               >
                 Reject
               </Button>
-            </View>
+            </GlassSurface>
           )}
         />
       )}
@@ -118,7 +119,7 @@ export function ResidentApprovalsScreen() {
         scrollEnabled={false}
         ListEmptyComponent={<EmptyState icon="account-group-outline" title="No residents yet" />}
         renderItem={({ item }) => (
-          <View style={[styles.row, { borderColor: colors.border }]}>
+          <GlassSurface style={styles.rowShell} contentStyle={styles.row}>
             <Avatar.Text size={40} label={item.fullName.slice(0, 2).toUpperCase()} />
             <View style={styles.flex1}>
               <Text style={{ color: colors.text, fontWeight: '600' }}>{item.fullName}</Text>
@@ -134,7 +135,7 @@ export function ResidentApprovalsScreen() {
             >
               {item.role === 'security' ? 'Security' : 'Make Security'}
             </Chip>
-          </View>
+          </GlassSurface>
         )}
       />
     </ScreenContainer>
@@ -143,7 +144,8 @@ export function ResidentApprovalsScreen() {
 
 const styles = StyleSheet.create({
   sectionTitle: { fontWeight: '700', marginBottom: 12 },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 10, borderBottomWidth: 1 },
+  rowShell: { marginBottom: 10 },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 10 },
   flex1: { flex: 1 },
   smallBtn: { marginRight: 4 },
 });

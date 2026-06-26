@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { FAB, Text } from 'react-native-paper';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { EmptyState } from '../../components/common/EmptyState';
 import { StatusBadge } from '../../components/common/StatusBadge';
@@ -37,10 +38,11 @@ export function PollListScreen({ navigation }: Props) {
           const closed = !item.isActive || isOverdue(item.deadline);
           return (
             <TouchableOpacity
-              style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}
+              style={styles.cardShell}
               onPress={() => navigation.navigate('PollDetail', { pollId: item.id })}
               activeOpacity={0.7}
             >
+              <GlassSurface contentStyle={styles.card}>
               <View style={styles.headerRow}>
                 <Text variant="titleMedium" style={[styles.flex1, { color: colors.text }]} numberOfLines={2}>
                   {item.question}
@@ -50,6 +52,7 @@ export function PollListScreen({ navigation }: Props) {
               <Text variant="bodySmall" style={{ color: colors.textMuted, marginTop: 6 }}>
                 {item.totalVotes} votes • Closes {formatDate(item.deadline)}
               </Text>
+              </GlassSurface>
             </TouchableOpacity>
           );
         }}
@@ -65,7 +68,8 @@ export function PollListScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   flex1: { flex: 1 },
-  card: { borderRadius: 14, borderWidth: 1, padding: 14, marginBottom: 12 },
+  cardShell: { marginBottom: 12 },
+  card: { padding: 14 },
   headerRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 8 },
   fab: { position: 'absolute', right: 16, bottom: 16 },
 });

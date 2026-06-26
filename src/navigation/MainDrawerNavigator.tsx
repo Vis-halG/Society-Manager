@@ -14,9 +14,8 @@ import { NotificationsScreen } from '../screens/notifications/NotificationsScree
 import { ResidentApprovalsScreen } from '../screens/admin/ResidentApprovalsScreen';
 import { ReportsScreen } from '../screens/admin/ReportsScreen';
 import { CustomDrawerContent } from './CustomDrawerContent';
-import { LogoutHeaderButton } from '../components/common/LogoutHeaderButton';
 import { useAuth } from '../context/AuthContext';
-import { useAppTheme } from '../context/ThemeContext';
+import { useGlassDrawerOptions } from './options';
 import type { RootDrawerParamList } from './types';
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
@@ -29,28 +28,13 @@ function drawerIcon(name: keyof typeof MaterialCommunityIcons.glyphMap) {
 
 export function MainDrawerNavigator() {
   const { user } = useAuth();
-  const { colors } = useAppTheme();
+  const drawerOptions = useGlassDrawerOptions();
   const isAdmin = user?.role === 'admin';
 
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{
-        headerShown: false,
-        headerRight: () => <LogoutHeaderButton />,
-        drawerActiveTintColor: colors.primary,
-        drawerInactiveTintColor: colors.textMuted,
-        drawerActiveBackgroundColor: `${colors.primary}14`,
-        drawerStyle: {
-          backgroundColor: colors.surfaceStrong,
-          borderRightColor: colors.border,
-          width: 304,
-        },
-        sceneContainerStyle: { backgroundColor: colors.background },
-        headerStyle: { backgroundColor: colors.surfaceGlass },
-        headerTintColor: colors.text,
-        headerShadowVisible: false,
-      }}
+      screenOptions={{ ...drawerOptions, headerShown: false }}
     >
       <Drawer.Screen
         name="Tabs"

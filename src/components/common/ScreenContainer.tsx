@@ -28,12 +28,26 @@ export function ScreenContainer({
         locations={[0, 0.52, 1] as const}
         style={StyleSheet.absoluteFill}
       />
+      <LinearGradient
+        pointerEvents="none"
+        colors={[`${colors.primary}20`, `${colors.secondary}14`, 'transparent'] as const}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.topPrism}
+      />
+      <LinearGradient
+        pointerEvents="none"
+        colors={[`${colors.info}18`, `${colors.warning}10`, 'transparent'] as const}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={styles.bottomPrism}
+      />
       <View
         pointerEvents="none"
         style={[
           styles.lightBand,
           {
-            backgroundColor: colors.scrim,
+            backgroundColor: colors.surfaceSoft,
             borderColor: colors.borderStrong,
           },
         ]}
@@ -70,6 +84,22 @@ const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: 'transparent' },
   flex: { flex: 1 },
   padded: { padding: 18, paddingBottom: 96 },
+  topPrism: {
+    position: 'absolute',
+    top: -120,
+    left: -80,
+    right: -40,
+    height: 340,
+    transform: [{ rotate: '-12deg' }],
+  },
+  bottomPrism: {
+    position: 'absolute',
+    left: -90,
+    right: -90,
+    bottom: -150,
+    height: 360,
+    transform: [{ rotate: '9deg' }],
+  },
   lightBand: {
     position: 'absolute',
     top: -90,

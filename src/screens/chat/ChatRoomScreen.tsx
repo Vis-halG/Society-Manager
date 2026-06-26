@@ -3,7 +3,7 @@ import { FlatList, KeyboardAvoidingView, Platform, StyleSheet, View } from 'reac
 import { Text } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScreenContainer } from '../../components/common/ScreenContainer';
 import { ChatBubble } from '../../components/common/ChatBubble';
 import { ChatInputBar } from '../../components/common/ChatInputBar';
 import { EmptyState } from '../../components/common/EmptyState';
@@ -70,7 +70,7 @@ export function ChatRoomScreen({ route, navigation }: Props) {
   };
 
   return (
-    <SafeAreaView style={[styles.flex, { backgroundColor: colors.background }]} edges={['left', 'right', 'bottom']}>
+    <ScreenContainer padded={false}>
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -102,7 +102,7 @@ export function ChatRoomScreen({ route, navigation }: Props) {
         />
         <ChatInputBar onSend={handleSend} onPickImage={handlePickImage} sending={sending} />
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </ScreenContainer>
   );
 }
 

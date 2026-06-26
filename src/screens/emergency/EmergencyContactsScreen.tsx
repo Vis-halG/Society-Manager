@@ -4,6 +4,7 @@ import { Button, Dialog, FAB, IconButton, Portal, Text } from 'react-native-pape
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useForm } from 'react-hook-form';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { EmptyState } from '../../components/common/EmptyState';
 import { FormInput } from '../../components/common/FormInput';
@@ -74,7 +75,7 @@ export function EmergencyContactsScreen() {
         contentContainerStyle={contacts.length === 0 ? styles.flex : undefined}
         ListEmptyComponent={<EmptyState icon="phone-alert-outline" title="No emergency contacts yet" />}
         renderItem={({ item }) => (
-          <View style={[styles.row, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+          <GlassSurface style={styles.rowShell} contentStyle={styles.row}>
             <View style={[styles.iconWrap, { backgroundColor: `${colors.danger}1A` }]}>
               <MaterialCommunityIcons name={item.icon as never} size={22} color={colors.danger} />
             </View>
@@ -92,7 +93,7 @@ export function EmergencyContactsScreen() {
             {isAdmin ? (
               <IconButton icon="delete-outline" onPress={() => deleteEmergencyContact(item.id)} />
             ) : null}
-          </View>
+          </GlassSurface>
         )}
       />
 
@@ -136,11 +137,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    borderWidth: 1,
-    borderRadius: 12,
     padding: 10,
-    marginBottom: 10,
   },
+  rowShell: { marginBottom: 10 },
   flex1: { flex: 1 },
   iconWrap: { width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
   fab: { position: 'absolute', right: 16, bottom: 16 },

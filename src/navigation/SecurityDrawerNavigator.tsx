@@ -4,8 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { VisitorsNavigator } from './VisitorsNavigator';
 import { ProfileNavigator } from './ProfileNavigator';
 import { CustomDrawerContent } from './CustomDrawerContent';
-import { LogoutHeaderButton } from '../components/common/LogoutHeaderButton';
-import { useAppTheme } from '../context/ThemeContext';
+import { useGlassDrawerOptions } from './options';
 import type { RootDrawerParamList } from './types';
 
 const Drawer = createDrawerNavigator<Pick<RootDrawerParamList, 'Visitors' | 'ProfileStack'>>();
@@ -17,27 +16,12 @@ function drawerIcon(name: keyof typeof MaterialCommunityIcons.glyphMap) {
 }
 
 export function SecurityDrawerNavigator() {
-  const { colors } = useAppTheme();
+  const drawerOptions = useGlassDrawerOptions();
 
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{
-        headerShown: true,
-        headerRight: () => <LogoutHeaderButton />,
-        drawerActiveTintColor: colors.primary,
-        drawerInactiveTintColor: colors.textMuted,
-        drawerActiveBackgroundColor: `${colors.primary}14`,
-        drawerStyle: {
-          backgroundColor: colors.surfaceStrong,
-          borderRightColor: colors.border,
-          width: 304,
-        },
-        sceneContainerStyle: { backgroundColor: colors.background },
-        headerStyle: { backgroundColor: colors.surfaceGlass },
-        headerTintColor: colors.text,
-        headerShadowVisible: false,
-      }}
+      screenOptions={{ ...drawerOptions, headerShown: true }}
     >
       <Drawer.Screen
         name="Visitors"

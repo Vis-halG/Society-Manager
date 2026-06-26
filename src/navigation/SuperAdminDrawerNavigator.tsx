@@ -5,8 +5,7 @@ import { SuperAdminNavigator } from './SuperAdminNavigator';
 import { ReportsScreen } from '../screens/admin/ReportsScreen';
 import { ProfileNavigator } from './ProfileNavigator';
 import { CustomDrawerContent } from './CustomDrawerContent';
-import { LogoutHeaderButton } from '../components/common/LogoutHeaderButton';
-import { useAppTheme } from '../context/ThemeContext';
+import { useGlassDrawerOptions } from './options';
 import type { RootDrawerParamList } from './types';
 
 const Drawer = createDrawerNavigator<Pick<RootDrawerParamList, 'ManageSocieties' | 'Reports' | 'ProfileStack'>>();
@@ -18,26 +17,12 @@ function drawerIcon(name: keyof typeof MaterialCommunityIcons.glyphMap) {
 }
 
 export function SuperAdminDrawerNavigator() {
-  const { colors } = useAppTheme();
+  const drawerOptions = useGlassDrawerOptions();
 
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{
-        headerRight: () => <LogoutHeaderButton />,
-        drawerActiveTintColor: colors.primary,
-        drawerInactiveTintColor: colors.textMuted,
-        drawerActiveBackgroundColor: `${colors.primary}14`,
-        drawerStyle: {
-          backgroundColor: colors.surfaceStrong,
-          borderRightColor: colors.border,
-          width: 304,
-        },
-        sceneContainerStyle: { backgroundColor: colors.background },
-        headerStyle: { backgroundColor: colors.surfaceGlass },
-        headerTintColor: colors.text,
-        headerShadowVisible: false,
-      }}
+      screenOptions={drawerOptions}
     >
       <Drawer.Screen
         name="ManageSocieties"

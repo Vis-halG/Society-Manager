@@ -1,6 +1,8 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 import { DashboardScreen } from '../screens/dashboard/DashboardScreen';
 import { MoreScreen } from '../screens/dashboard/MoreScreen';
 import { NoticesNavigator } from './NoticesNavigator';
@@ -20,7 +22,7 @@ const ICONS: Record<keyof TabsParamList, keyof typeof MaterialCommunityIcons.gly
 };
 
 export function TabsNavigator() {
-  const { colors } = useAppTheme();
+  const { colors, isDark } = useAppTheme();
 
   return (
     <Tab.Navigator
@@ -30,6 +32,13 @@ export function TabsNavigator() {
         tabBarInactiveTintColor: colors.textMuted,
         sceneStyle: { backgroundColor: colors.background },
         tabBarLabelStyle: { fontWeight: '600' },
+        tabBarBackground: () => (
+          <BlurView
+            intensity={72}
+            tint={isDark ? 'dark' : 'light'}
+            style={StyleSheet.absoluteFill}
+          />
+        ),
         tabBarStyle: {
           position: 'absolute',
           left: 12,
@@ -43,6 +52,7 @@ export function TabsNavigator() {
           borderTopWidth: 1,
           borderColor: colors.borderStrong,
           backgroundColor: colors.surfaceGlass,
+          overflow: 'hidden',
           shadowColor: colors.shadow,
           shadowOffset: { width: 0, height: 12 },
           shadowOpacity: 1,

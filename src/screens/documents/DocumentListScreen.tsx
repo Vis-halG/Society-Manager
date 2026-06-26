@@ -4,6 +4,7 @@ import { Chip, Dialog, FAB, IconButton, Portal, Text } from 'react-native-paper'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { EmptyState } from '../../components/common/EmptyState';
 import { useAuth } from '../../context/AuthContext';
@@ -65,7 +66,7 @@ export function DocumentListScreen({ navigation }: Props) {
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={<EmptyState icon="folder-outline" title="No documents found" />}
         renderItem={({ item }) => (
-          <View style={[styles.row, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+          <GlassSurface style={styles.rowShell} contentStyle={styles.row}>
             <MaterialCommunityIcons name="file-pdf-box" size={28} color={colors.primary} />
             <View style={styles.flex1}>
               <Text style={{ color: colors.text, fontWeight: '600' }} numberOfLines={1}>
@@ -79,7 +80,7 @@ export function DocumentListScreen({ navigation }: Props) {
             {isAdmin ? (
               <IconButton icon="delete-outline" onPress={() => setDeleteTarget(item)} />
             ) : null}
-          </View>
+          </GlassSurface>
         )}
       />
 
@@ -112,11 +113,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    borderWidth: 1,
-    borderRadius: 12,
     padding: 12,
-    marginBottom: 10,
   },
+  rowShell: { marginBottom: 10 },
   flex1: { flex: 1 },
   fab: { position: 'absolute', right: 16, bottom: 16 },
 });

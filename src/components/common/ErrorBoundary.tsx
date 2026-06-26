@@ -1,16 +1,24 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
+import { lightColors } from '../../theme';
 
 export function ErrorScreen({ message }: { message: string }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text variant="titleLarge" style={styles.title}>
-        Something went wrong
-      </Text>
-      <Text variant="bodyMedium" style={styles.message}>
-        {message}
-      </Text>
+      <LinearGradient
+        colors={[lightColors.backgroundTop, lightColors.backgroundMiddle, lightColors.backgroundBottom] as const}
+        style={StyleSheet.absoluteFill}
+      />
+      <View style={styles.panel}>
+        <Text variant="titleLarge" style={styles.title}>
+          Something went wrong
+        </Text>
+        <Text variant="bodyMedium" style={styles.message}>
+          {message}
+        </Text>
+      </View>
     </ScrollView>
   );
 }
@@ -50,15 +58,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 48,
     paddingHorizontal: 24,
-    backgroundColor: '#fff',
+  },
+  panel: {
+    width: '100%',
+    maxWidth: 520,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: lightColors.borderStrong,
+    backgroundColor: lightColors.surfaceGlass,
+    padding: 18,
   },
   title: {
     fontWeight: '600',
     textAlign: 'center',
     marginBottom: 12,
+    color: lightColors.text,
   },
   message: {
     textAlign: 'center',
-    color: '#666',
+    color: lightColors.textMuted,
   },
 });

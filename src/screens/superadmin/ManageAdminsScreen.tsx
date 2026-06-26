@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import { Chip, Text } from 'react-native-paper';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { EmptyState } from '../../components/common/EmptyState';
 import { useAppTheme } from '../../context/ThemeContext';
@@ -53,7 +54,7 @@ export function ManageAdminsScreen({ route }: Props) {
         contentContainerStyle={users.length === 0 ? styles.flex : undefined}
         ListEmptyComponent={<EmptyState icon="account-group-outline" title="No members in this society" />}
         renderItem={({ item }) => (
-          <View style={[styles.row, { borderColor: colors.border }]}>
+          <GlassSurface style={styles.rowShell} contentStyle={styles.row}>
             <View style={styles.flex1}>
               <Text style={{ color: colors.text, fontWeight: '600' }}>{item.fullName}</Text>
               <Text style={{ color: colors.textMuted }}>{item.email}</Text>
@@ -65,7 +66,7 @@ export function ManageAdminsScreen({ route }: Props) {
             >
               {item.role === 'admin' ? 'Admin' : 'Make Admin'}
             </Chip>
-          </View>
+          </GlassSurface>
         )}
       />
     </ScreenContainer>
@@ -74,6 +75,7 @@ export function ManageAdminsScreen({ route }: Props) {
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 10, borderBottomWidth: 1 },
+  rowShell: { marginBottom: 10 },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 10 },
   flex1: { flex: 1 },
 });

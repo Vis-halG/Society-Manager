@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { EmptyState } from '../../components/common/EmptyState';
 import { useAuth } from '../../context/AuthContext';
@@ -40,26 +41,25 @@ export function NotificationsScreen() {
         ListEmptyComponent={<EmptyState icon="bell-outline" title="No notifications yet" />}
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={[
-              styles.row,
-              { backgroundColor: item.isRead ? colors.background : colors.surface, borderColor: colors.border },
-            ]}
+            style={styles.rowShell}
             onPress={() => !item.isRead && markNotificationRead(item.id)}
             activeOpacity={0.7}
           >
-            <View style={[styles.iconWrap, { backgroundColor: `${colors.primary}1A` }]}>
-              <MaterialCommunityIcons name={TYPE_ICON[item.type]} size={20} color={colors.primary} />
-            </View>
-            <View style={styles.flex1}>
-              <Text style={{ color: colors.text, fontWeight: item.isRead ? '400' : '700' }}>{item.title}</Text>
-              <Text style={{ color: colors.textMuted }} numberOfLines={2}>
-                {item.body}
-              </Text>
-              <Text variant="labelSmall" style={{ color: colors.textMuted, marginTop: 4 }}>
-                {formatRelative(item.createdAt)}
-              </Text>
-            </View>
-            {!item.isRead ? <View style={[styles.dot, { backgroundColor: colors.primary }]} /> : null}
+            <GlassSurface variant={item.isRead ? 'subtle' : 'default'} contentStyle={styles.row}>
+              <View style={[styles.iconWrap, { backgroundColor: `${colors.primary}1A` }]}>
+                <MaterialCommunityIcons name={TYPE_ICON[item.type]} size={20} color={colors.primary} />
+              </View>
+              <View style={styles.flex1}>
+                <Text style={{ color: colors.text, fontWeight: item.isRead ? '400' : '700' }}>{item.title}</Text>
+                <Text style={{ color: colors.textMuted }} numberOfLines={2}>
+                  {item.body}
+                </Text>
+                <Text variant="labelSmall" style={{ color: colors.textMuted, marginTop: 4 }}>
+                  {formatRelative(item.createdAt)}
+                </Text>
+              </View>
+              {!item.isRead ? <View style={[styles.dot, { backgroundColor: colors.primary }]} /> : null}
+            </GlassSurface>
           </TouchableOpacity>
         )}
       />
@@ -69,7 +69,8 @@ export function NotificationsScreen() {
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  row: { flexDirection: 'row', alignItems: 'flex-start', gap: 10, borderWidth: 1, borderRadius: 12, padding: 12, marginBottom: 10 },
+  rowShell: { marginBottom: 10 },
+  row: { flexDirection: 'row', alignItems: 'flex-start', gap: 10, padding: 12 },
   flex1: { flex: 1 },
   iconWrap: { width: 36, height: 36, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
   dot: { width: 8, height: 8, borderRadius: 4, marginTop: 6 },

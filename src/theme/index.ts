@@ -25,31 +25,46 @@ export const radius = {
   full: 999,
 };
 
-export const paperLightTheme: MD3Theme = {
-  ...MD3LightTheme,
-  roundness: 8,
-  colors: {
-    ...MD3LightTheme.colors,
-    primary: lightColors.primary,
-    secondary: lightColors.secondary,
-    background: lightColors.background,
-    surface: lightColors.surface,
-    error: lightColors.danger,
-  },
-};
+function createPaperTheme(baseTheme: MD3Theme, colors: AppColors, isDark: boolean): MD3Theme {
+  return {
+    ...baseTheme,
+    roundness: 8,
+    colors: {
+      ...baseTheme.colors,
+      primary: colors.primary,
+      onPrimary: isDark ? colors.background : '#FFFFFF',
+      primaryContainer: `${colors.primary}1F`,
+      onPrimaryContainer: colors.primaryDark,
+      secondary: colors.secondary,
+      secondaryContainer: `${colors.secondary}1F`,
+      background: colors.background,
+      surface: colors.surface,
+      surfaceVariant: colors.surfaceGlass,
+      surfaceDisabled: `${colors.textMuted}1F`,
+      onSurface: colors.text,
+      onSurfaceVariant: colors.textMuted,
+      outline: colors.border,
+      outlineVariant: colors.borderStrong,
+      error: colors.danger,
+      onError: '#FFFFFF',
+      errorContainer: `${colors.danger}18`,
+      backdrop: colors.overlay,
+      elevation: {
+        ...baseTheme.colors.elevation,
+        level0: 'transparent',
+        level1: colors.surfaceSoft,
+        level2: colors.surfaceGlass,
+        level3: colors.surface,
+        level4: colors.surfaceStrong,
+        level5: colors.elevated,
+      },
+    },
+  };
+}
 
-export const paperDarkTheme: MD3Theme = {
-  ...MD3DarkTheme,
-  roundness: 8,
-  colors: {
-    ...MD3DarkTheme.colors,
-    primary: darkColors.primary,
-    secondary: darkColors.secondary,
-    background: darkColors.background,
-    surface: darkColors.surface,
-    error: darkColors.danger,
-  },
-};
+export const paperLightTheme: MD3Theme = createPaperTheme(MD3LightTheme, lightColors, false);
+
+export const paperDarkTheme: MD3Theme = createPaperTheme(MD3DarkTheme, darkColors, true);
 
 export const navLightTheme: NavTheme = {
   ...NavLightTheme,
@@ -57,7 +72,7 @@ export const navLightTheme: NavTheme = {
     ...NavLightTheme.colors,
     primary: lightColors.primary,
     background: lightColors.background,
-    card: lightColors.card,
+    card: lightColors.surfaceGlass,
     text: lightColors.text,
     border: lightColors.border,
     notification: lightColors.notification,
@@ -70,7 +85,7 @@ export const navDarkTheme: NavTheme = {
     ...NavDarkTheme.colors,
     primary: darkColors.primary,
     background: darkColors.background,
-    card: darkColors.card,
+    card: darkColors.surfaceGlass,
     text: darkColors.text,
     border: darkColors.border,
     notification: darkColors.notification,

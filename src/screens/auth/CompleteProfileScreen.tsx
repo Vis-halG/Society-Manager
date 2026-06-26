@@ -100,7 +100,15 @@ export function CompleteProfileScreen() {
             onDismiss={() => setMenuVisible(false)}
             anchor={
               <TouchableRipple onPress={() => setMenuVisible(true)} style={styles.societyPicker}>
-                <View style={[styles.societyBox, { borderColor: societyError ? colors.danger : colors.border }]}>
+                <View
+                  style={[
+                    styles.societyBox,
+                    {
+                      backgroundColor: colors.input,
+                      borderColor: societyError ? colors.danger : colors.border,
+                    },
+                  ]}
+                >
                   <Text style={{ color: selectedSociety ? colors.text : colors.textMuted }}>
                     {selectedSociety ? selectedSociety.name : 'Select Society'}
                   </Text>

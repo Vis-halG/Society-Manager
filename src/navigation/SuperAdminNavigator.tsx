@@ -3,14 +3,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ManageSocietiesScreen } from '../screens/superadmin/ManageSocietiesScreen';
 import { SocietyFormScreen } from '../screens/superadmin/SocietyFormScreen';
 import { ManageAdminsScreen } from '../screens/superadmin/ManageAdminsScreen';
-import { LogoutHeaderButton } from '../components/common/LogoutHeaderButton';
+import { useGlassStackOptions } from './options';
 import type { SuperAdminStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<SuperAdminStackParamList>();
 
 export function SuperAdminNavigator() {
+  const screenOptions = useGlassStackOptions();
+
   return (
-    <Stack.Navigator screenOptions={{ headerRight: () => <LogoutHeaderButton /> }}>
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="ManageSocieties" component={ManageSocietiesScreen} options={{ title: 'Societies' }} />
       <Stack.Screen name="SocietyForm" component={SocietyFormScreen} options={{ title: 'New Society' }} />
       <Stack.Screen

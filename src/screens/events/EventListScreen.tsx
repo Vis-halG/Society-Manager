@@ -3,6 +3,7 @@ import { FlatList, Image, StyleSheet, TouchableOpacity, View } from 'react-nativ
 import { FAB, Text } from 'react-native-paper';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { EmptyState } from '../../components/common/EmptyState';
 import { useAuth } from '../../context/AuthContext';
@@ -34,10 +35,11 @@ export function EventListScreen({ navigation }: Props) {
         ListEmptyComponent={<EmptyState icon="calendar-star" title="No upcoming events" />}
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}
+            style={styles.cardShell}
             onPress={() => navigation.navigate('EventDetail', { eventId: item.id })}
             activeOpacity={0.7}
           >
+            <GlassSurface contentStyle={styles.card}>
             {item.bannerUrl ? <Image source={{ uri: item.bannerUrl }} style={styles.banner} /> : null}
             <View style={styles.cardBody}>
               <Text variant="titleMedium" style={{ color: colors.text }}>
@@ -47,6 +49,7 @@ export function EventListScreen({ navigation }: Props) {
                 {formatDate(item.startAt)} • {item.location}
               </Text>
             </View>
+            </GlassSurface>
           </TouchableOpacity>
         )}
       />
@@ -60,7 +63,8 @@ export function EventListScreen({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  card: { borderRadius: 14, borderWidth: 1, marginBottom: 12, overflow: 'hidden' },
+  cardShell: { marginBottom: 12 },
+  card: { overflow: 'hidden' },
   banner: { width: '100%', height: 120 },
   cardBody: { padding: 14 },
   fab: { position: 'absolute', right: 16, bottom: 16 },

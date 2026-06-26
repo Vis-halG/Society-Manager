@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useForm } from 'react-hook-form';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { FormInput } from '../../components/common/FormInput';
 import { useAuth } from '../../context/AuthContext';
 import { useAppTheme } from '../../context/ThemeContext';
@@ -66,7 +67,7 @@ export function LoginScreen({ navigation }: Props) {
           </Text>
         </View>
 
-        <View style={[styles.panel, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+        <GlassSurface variant="strong" contentStyle={styles.panel}>
           {Platform.OS === 'web' ? (
             <>
               <Button
@@ -126,7 +127,7 @@ export function LoginScreen({ navigation }: Props) {
           <Button mode="text" onPress={() => navigation.navigate('ForgotPassword')}>
             Forgot Password?
           </Button>
-        </View>
+        </GlassSurface>
 
         <View style={styles.footer}>
           <Text style={{ color: colors.textMuted }}>New resident?</Text>
@@ -189,8 +190,6 @@ const styles = StyleSheet.create({
   title: { fontWeight: '700' },
   subtitle: { textAlign: 'center' },
   panel: {
-    borderWidth: 1,
-    borderRadius: 8,
     padding: 16,
   },
   googleButton: { marginBottom: 12 },

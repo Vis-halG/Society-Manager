@@ -4,6 +4,7 @@ import { Button, Text } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
+import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
 import { StatusBadge } from '../../components/common/StatusBadge';
 import { useAuth } from '../../context/AuthContext';
@@ -80,6 +81,7 @@ export function VisitorDetailScreen({ route }: Props) {
         <StatusBadge status={visitor.status} />
       </View>
 
+      <GlassSurface contentStyle={styles.detailsCard}>
       <View style={[styles.row, { borderColor: colors.border }]}>
         <Text style={{ color: colors.textMuted }}>Name</Text>
         <Text style={{ color: colors.text }}>{visitor.visitorName}</Text>
@@ -108,6 +110,7 @@ export function VisitorDetailScreen({ route }: Props) {
           <Text style={{ color: colors.text }}>{formatDateTime(visitor.exitTime)}</Text>
         </View>
       ) : null}
+      </GlassSurface>
 
       {isAdmin && visitor.status === 'pending' ? (
         <View style={styles.actionsRow}>
@@ -137,6 +140,7 @@ export function VisitorDetailScreen({ route }: Props) {
 const styles = StyleSheet.create({
   qrWrap: { alignItems: 'center', marginBottom: 24, gap: 12 },
   qrCard: { padding: 16, backgroundColor: '#fff', borderRadius: 16 },
+  detailsCard: { paddingHorizontal: 16 },
   row: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10, borderBottomWidth: 1 },
   actionsRow: { flexDirection: 'row', gap: 12, marginTop: 24 },
   actionBtn: { flex: 1 },

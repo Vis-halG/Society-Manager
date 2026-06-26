@@ -5,14 +5,16 @@ import { EditProfileScreen } from '../screens/profile/EditProfileScreen';
 import { ChangePasswordScreen } from '../screens/profile/ChangePasswordScreen';
 import { FamilyMembersScreen } from '../screens/profile/FamilyMembersScreen';
 import { SettingsScreen } from '../screens/profile/SettingsScreen';
-import { LogoutHeaderButton } from '../components/common/LogoutHeaderButton';
+import { useGlassStackOptions } from './options';
 import type { ProfileStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<ProfileStackParamList>();
 
 export function ProfileNavigator() {
+  const screenOptions = useGlassStackOptions();
+
   return (
-    <Stack.Navigator screenOptions={{ headerRight: () => <LogoutHeaderButton /> }}>
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="ProfileHome" component={ProfileScreen} options={{ title: 'Profile' }} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ title: 'Edit Profile' }} />
       <Stack.Screen

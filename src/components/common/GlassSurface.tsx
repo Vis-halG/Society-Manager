@@ -9,6 +9,7 @@ interface GlassSurfaceProps {
   style?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
   intensity?: number;
+  variant?: 'subtle' | 'default' | 'strong';
 }
 
 export function GlassSurface({
@@ -16,8 +17,15 @@ export function GlassSurface({
   style,
   contentStyle,
   intensity = 58,
+  variant = 'default',
 }: GlassSurfaceProps) {
   const { colors, isDark } = useAppTheme();
+  const backgroundColor =
+    variant === 'strong'
+      ? colors.surfaceStrong
+      : variant === 'subtle'
+        ? colors.surfaceSoft
+        : colors.surfaceGlass;
 
   return (
     <View
@@ -33,7 +41,7 @@ export function GlassSurface({
         style={[
           styles.clip,
           {
-            backgroundColor: colors.surfaceGlass,
+            backgroundColor,
             borderColor: colors.borderStrong,
           },
         ]}
@@ -58,10 +66,10 @@ export function GlassSurface({
 const styles = StyleSheet.create({
   shadow: {
     borderRadius: 8,
-    shadowOffset: { width: 0, height: 14 },
+    shadowOffset: { width: 0, height: 16 },
     shadowOpacity: 1,
-    shadowRadius: 28,
-    elevation: 3,
+    shadowRadius: 32,
+    elevation: 4,
   },
   clip: {
     borderRadius: 8,
