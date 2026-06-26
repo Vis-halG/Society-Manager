@@ -6,9 +6,9 @@ import { useAuth } from '../context/AuthContext';
 import { useAppTheme } from '../context/ThemeContext';
 import { LoadingOverlay } from '../components/common/LoadingOverlay';
 import { AuthNavigator } from './AuthNavigator';
-import { MainDrawerNavigator } from './MainDrawerNavigator';
-import { SecurityDrawerNavigator } from './SecurityDrawerNavigator';
-import { SuperAdminDrawerNavigator } from './SuperAdminDrawerNavigator';
+import { TabsNavigator } from './TabsNavigator';
+import { SecurityTabsNavigator } from './SecurityTabsNavigator';
+import { SuperAdminTabsNavigator } from './SuperAdminTabsNavigator';
 import { CompleteProfileScreen } from '../screens/auth/CompleteProfileScreen';
 import { EmailVerificationScreen } from '../screens/auth/EmailVerificationScreen';
 import { PendingApprovalScreen } from '../screens/auth/PendingApprovalScreen';
@@ -55,11 +55,11 @@ export function RootNavigator() {
   } else if (!user || user.approvalStatus !== 'approved') {
     content = <GateNavigator component={PendingApprovalScreen} />;
   } else if (user.role === 'security') {
-    content = <SecurityDrawerNavigator />;
+    content = <SecurityTabsNavigator />;
   } else if (user.role === 'super_admin') {
-    content = <SuperAdminDrawerNavigator />;
+    content = <SuperAdminTabsNavigator />;
   } else {
-    content = <MainDrawerNavigator />;
+    content = <TabsNavigator />;
   }
 
   return <NavigationContainer theme={navTheme}>{content}</NavigationContainer>;

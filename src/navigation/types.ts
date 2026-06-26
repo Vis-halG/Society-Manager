@@ -1,3 +1,5 @@
+import type { NavigatorScreenParams } from '@react-navigation/native';
+
 export type AuthStackParamList = {
   Login: undefined;
   Register: undefined;
@@ -72,26 +74,36 @@ export type SuperAdminStackParamList = {
   ManageAdmins: { societyId: string; societyName: string };
 };
 
+export type MoreStackParamList = {
+  MoreHome: undefined;
+  Maintenance: undefined;
+  Visitors: undefined;
+  Parking: undefined;
+  Polls: undefined;
+  Events: undefined;
+  Documents: undefined;
+  ProfileStack: undefined;
+  Notifications: undefined;
+  EmergencyContacts: undefined;
+  ResidentApprovals: undefined;
+  Reports: undefined;
+};
+
 export type TabsParamList = {
   Dashboard: undefined;
   Notices: undefined;
   Complaints: undefined;
   Chat: undefined;
-  More: undefined;
+  More: NavigatorScreenParams<MoreStackParamList> | undefined;
 };
 
-export type RootDrawerParamList = {
-  Tabs: undefined;
+export type SecurityTabsParamList = {
   Visitors: undefined;
-  Maintenance: undefined;
-  Parking: undefined;
-  Polls: undefined;
-  Events: undefined;
-  Documents: undefined;
-  Notifications: undefined;
   ProfileStack: undefined;
-  EmergencyContacts: undefined;
-  ResidentApprovals: undefined;
-  Reports: undefined;
+};
+
+export type SuperAdminTabsParamList = {
   ManageSocieties: undefined;
+  Reports: undefined;
+  ProfileStack: undefined;
 };

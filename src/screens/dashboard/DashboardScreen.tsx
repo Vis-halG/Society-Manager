@@ -3,7 +3,6 @@ import { RefreshControl, StyleSheet, TouchableOpacity, View } from 'react-native
 import { Text } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
 import { GlassSurface } from '../../components/common/GlassSurface';
 import { LoadingOverlay } from '../../components/common/LoadingOverlay';
@@ -18,7 +17,7 @@ import {
   type AdminDashboardStats,
   type ResidentDashboardStats,
 } from '../../services/dashboard.service';
-import type { RootDrawerParamList, TabsParamList } from '../../navigation/types';
+import type { TabsParamList } from '../../navigation/types';
 
 type Props = BottomTabScreenProps<TabsParamList, 'Dashboard'>;
 
@@ -33,7 +32,6 @@ interface QuickAction {
 export function DashboardScreen({ navigation }: Props) {
   const { user } = useAuth();
   const { colors } = useAppTheme();
-  const drawerNavigation = navigation.getParent<DrawerNavigationProp<RootDrawerParamList>>();
   const [stats, setStats] = useState<ResidentDashboardStats | AdminDashboardStats | null>(null);
   const [breakdown, setBreakdown] = useState<{ status: string; count: number }[]>([]);
   const [loading, setLoading] = useState(true);
@@ -77,21 +75,21 @@ export function DashboardScreen({ navigation }: Props) {
           description: `${adminStats?.pendingApprovals ?? 0} pending`,
           icon: 'account-check-outline',
           color: colors.warning,
-          onPress: () => drawerNavigation?.navigate('ResidentApprovals'),
+          onPress: () => navigation.navigate('More', { screen: 'ResidentApprovals' }),
         },
         {
           title: 'Maintenance',
           description: 'Bills and dues',
           icon: 'cash-multiple',
           color: colors.danger,
-          onPress: () => drawerNavigation?.navigate('Maintenance'),
+          onPress: () => navigation.navigate('More', { screen: 'Maintenance' }),
         },
         {
           title: 'Visitors',
           description: 'Gate requests',
           icon: 'account-question-outline',
           color: colors.primary,
-          onPress: () => drawerNavigation?.navigate('Visitors'),
+          onPress: () => navigation.navigate('More', { screen: 'Visitors' }),
         },
         {
           title: 'Notices',
@@ -107,7 +105,7 @@ export function DashboardScreen({ navigation }: Props) {
           description: `${stats?.unpaidBills ?? 0} unpaid`,
           icon: 'cash-multiple',
           color: colors.danger,
-          onPress: () => drawerNavigation?.navigate('Maintenance'),
+          onPress: () => navigation.navigate('More', { screen: 'Maintenance' }),
         },
         {
           title: 'Complaints',
@@ -121,7 +119,7 @@ export function DashboardScreen({ navigation }: Props) {
           description: 'Create a pass',
           icon: 'account-question-outline',
           color: colors.primary,
-          onPress: () => drawerNavigation?.navigate('Visitors'),
+          onPress: () => navigation.navigate('More', { screen: 'Visitors' }),
         },
         {
           title: 'Notices',
