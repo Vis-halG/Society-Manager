@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PollListScreen } from '../screens/polls/PollListScreen';
 import { PollDetailScreen } from '../screens/polls/PollDetailScreen';
 import { PollFormScreen } from '../screens/polls/PollFormScreen';
-import { MenuHeaderButton } from '../components/common/MenuHeaderButton';
 import { useGlassStackOptions } from './options';
 import type { PollsStackParamList } from './types';
 
@@ -14,11 +13,7 @@ export function PollsNavigator() {
 
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen
-        name="PollList"
-        component={PollListScreen}
-        options={{ title: 'Polls', headerLeft: () => <MenuHeaderButton /> }}
-      />
+      <Stack.Screen name="PollList" component={PollListScreen} options={{ title: 'Polls' }} />
       <Stack.Screen name="PollDetail" component={PollDetailScreen} options={{ title: 'Poll' }} />
       <Stack.Screen name="PollForm" component={PollFormScreen} options={{ title: 'New Poll' }} />
     </Stack.Navigator>

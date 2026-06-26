@@ -1,5 +1,7 @@
 import React from 'react';
-import type { DrawerNavigationOptions } from '@react-navigation/drawer';
+import { StyleSheet } from 'react-native';
+import { BlurView } from 'expo-blur';
+import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { LogoutHeaderButton } from '../components/common/LogoutHeaderButton';
 import { useAppTheme } from '../context/ThemeContext';
@@ -17,25 +19,37 @@ export function useGlassStackOptions(showLogout = true): NativeStackNavigationOp
   };
 }
 
-export function useGlassDrawerOptions(): DrawerNavigationOptions {
-  const { colors } = useAppTheme();
+export function useGlassTabOptions(): BottomTabNavigationOptions {
+  const { colors, isDark } = useAppTheme();
 
   return {
-    headerRight: () => <LogoutHeaderButton />,
-    drawerActiveTintColor: colors.primary,
-    drawerInactiveTintColor: colors.textMuted,
-    drawerActiveBackgroundColor: `${colors.primary}18`,
-    drawerStyle: {
-      backgroundColor: colors.surfaceStrong,
-      borderRightColor: colors.borderStrong,
-      width: 304,
-    },
-    drawerLabelStyle: { fontWeight: '600' },
-    overlayColor: colors.overlay,
+    headerShown: false,
+    tabBarActiveTintColor: colors.primary,
+    tabBarInactiveTintColor: colors.textMuted,
     sceneStyle: { backgroundColor: colors.background },
-    headerStyle: { backgroundColor: colors.surfaceGlass },
-    headerTintColor: colors.text,
-    headerTitleStyle: { fontWeight: '700' },
-    headerShadowVisible: false,
+    tabBarLabelStyle: { fontWeight: '600' },
+    tabBarBackground: () => (
+      <BlurView intensity={72} tint={isDark ? 'dark' : 'light'} style={StyleSheet.absoluteFill} />
+    ),
+    tabBarStyle: {
+      position: 'absolute',
+      left: 12,
+      right: 12,
+      bottom: 12,
+      height: 64,
+      paddingTop: 8,
+      paddingBottom: 8,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderTopWidth: 1,
+      borderColor: colors.borderStrong,
+      backgroundColor: colors.surfaceGlass,
+      overflow: 'hidden',
+      shadowColor: colors.shadow,
+      shadowOffset: { width: 0, height: 12 },
+      shadowOpacity: 1,
+      shadowRadius: 24,
+      elevation: 6,
+    },
   };
 }

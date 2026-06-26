@@ -4,7 +4,6 @@ import { MaintenanceListScreen } from '../screens/maintenance/MaintenanceListScr
 import { BillDetailScreen } from '../screens/maintenance/BillDetailScreen';
 import { BillGenerateScreen } from '../screens/maintenance/BillGenerateScreen';
 import { DefaultersScreen } from '../screens/maintenance/DefaultersScreen';
-import { MenuHeaderButton } from '../components/common/MenuHeaderButton';
 import { useGlassStackOptions } from './options';
 import type { MaintenanceStackParamList } from './types';
 
@@ -15,11 +14,7 @@ export function MaintenanceNavigator() {
 
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen
-        name="MaintenanceList"
-        component={MaintenanceListScreen}
-        options={{ title: 'Maintenance', headerLeft: () => <MenuHeaderButton /> }}
-      />
+      <Stack.Screen name="MaintenanceList" component={MaintenanceListScreen} options={{ title: 'Maintenance' }} />
       <Stack.Screen name="BillDetail" component={BillDetailScreen} options={{ title: 'Bill Details' }} />
       <Stack.Screen name="BillGenerate" component={BillGenerateScreen} options={{ title: 'Generate Bills' }} />
       <Stack.Screen name="Defaulters" component={DefaultersScreen} options={{ title: 'Defaulters' }} />
