@@ -1,23 +1,37 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { List } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { IconButton, List, Text } from 'react-native-paper';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import { ScreenContainer } from '../../components/common/ScreenContainer';
 import { GlassSurface } from '../../components/common/GlassSurface';
 import { useAuth } from '../../context/AuthContext';
+import { useAppTheme } from '../../context/ThemeContext';
 import type { TabsParamList, RootDrawerParamList } from '../../navigation/types';
 
 type Props = BottomTabScreenProps<TabsParamList, 'More'>;
 
 export function MoreScreen(_props: Props) {
   const { user, logout } = useAuth();
+  const { colors } = useAppTheme();
   const drawerNavigation = useNavigation<DrawerNavigationProp<RootDrawerParamList>>();
   const isAdmin = user?.role === 'admin';
 
   return (
     <ScreenContainer scroll>
+      <View style={styles.headerRow}>
+        <Text variant="headlineSmall" style={[styles.title, { color: colors.text }]}>
+          Menu
+        </Text>
+        <IconButton
+          icon="menu"
+          iconColor={colors.text}
+          size={24}
+          onPress={() => drawerNavigation.openDrawer()}
+          accessibilityLabel="Open menu"
+        />
+      </View>
       <GlassSurface style={styles.sectionShell} contentStyle={styles.sectionContent}>
         <List.Section title="Daily">
           <List.Item
@@ -104,6 +118,13 @@ export function MoreScreen(_props: Props) {
 }
 
 const styles = StyleSheet.create({
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  title: { fontWeight: '700' },
   sectionShell: { marginBottom: 14 },
   sectionContent: { overflow: 'hidden' },
 });

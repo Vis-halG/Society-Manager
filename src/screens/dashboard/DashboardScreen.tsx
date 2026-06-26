@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { IconButton, Text } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -137,13 +137,22 @@ export function DashboardScreen({ navigation }: Props) {
       scroll
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
-      <View style={styles.header}>
-        <Text variant="headlineSmall" style={[styles.title, { color: colors.text }]}>
-          Hello, {firstName}
-        </Text>
-        <Text style={{ color: colors.textMuted }}>
-          {isAdmin ? 'Start with the work that needs attention.' : 'Choose what you need today.'}
-        </Text>
+      <View style={styles.headerRow}>
+        <View style={styles.header}>
+          <Text variant="headlineSmall" style={[styles.title, { color: colors.text }]}>
+            Hello, {firstName}
+          </Text>
+          <Text style={{ color: colors.textMuted }}>
+            {isAdmin ? 'Start with the work that needs attention.' : 'Choose what you need today.'}
+          </Text>
+        </View>
+        <IconButton
+          icon="menu"
+          iconColor={colors.text}
+          size={24}
+          onPress={() => drawerNavigation?.openDrawer()}
+          accessibilityLabel="Open menu"
+        />
       </View>
 
       <Text variant="titleMedium" style={[styles.sectionTitle, { color: colors.text }]}>
@@ -241,7 +250,8 @@ export function DashboardScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  header: { marginBottom: 20, marginTop: 4 },
+  headerRow: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' },
+  header: { marginBottom: 20, marginTop: 4, flex: 1 },
   title: { fontWeight: '700' },
   sectionTitle: { fontWeight: '700', marginBottom: 10 },
   actionGrid: {

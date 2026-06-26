@@ -5,6 +5,7 @@ import { EditProfileScreen } from '../screens/profile/EditProfileScreen';
 import { ChangePasswordScreen } from '../screens/profile/ChangePasswordScreen';
 import { FamilyMembersScreen } from '../screens/profile/FamilyMembersScreen';
 import { SettingsScreen } from '../screens/profile/SettingsScreen';
+import { MenuHeaderButton } from '../components/common/MenuHeaderButton';
 import { useGlassStackOptions } from './options';
 import type { ProfileStackParamList } from './types';
 
@@ -15,7 +16,11 @@ export function ProfileNavigator() {
 
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen name="ProfileHome" component={ProfileScreen} options={{ title: 'Profile' }} />
+      <Stack.Screen
+        name="ProfileHome"
+        component={ProfileScreen}
+        options={{ title: 'Profile', headerLeft: () => <MenuHeaderButton /> }}
+      />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ title: 'Edit Profile' }} />
       <Stack.Screen
         name="ChangePassword"

@@ -4,6 +4,7 @@ import { VisitorListScreen } from '../screens/visitors/VisitorListScreen';
 import { VisitorFormScreen } from '../screens/visitors/VisitorFormScreen';
 import { VisitorDetailScreen } from '../screens/visitors/VisitorDetailScreen';
 import { SecurityScanScreen } from '../screens/visitors/SecurityScanScreen';
+import { MenuHeaderButton } from '../components/common/MenuHeaderButton';
 import { useGlassStackOptions } from './options';
 import type { VisitorsStackParamList } from './types';
 
@@ -14,7 +15,11 @@ export function VisitorsNavigator() {
 
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen name="VisitorList" component={VisitorListScreen} options={{ title: 'Visitors' }} />
+      <Stack.Screen
+        name="VisitorList"
+        component={VisitorListScreen}
+        options={{ title: 'Visitors', headerLeft: () => <MenuHeaderButton /> }}
+      />
       <Stack.Screen name="VisitorForm" component={VisitorFormScreen} options={{ title: 'Add Visitor' }} />
       <Stack.Screen name="VisitorDetail" component={VisitorDetailScreen} options={{ title: 'Visitor Pass' }} />
       <Stack.Screen name="SecurityScan" component={SecurityScanScreen} options={{ title: 'Scan QR' }} />

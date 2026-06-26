@@ -2,6 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DocumentListScreen } from '../screens/documents/DocumentListScreen';
 import { DocumentUploadScreen } from '../screens/documents/DocumentUploadScreen';
+import { MenuHeaderButton } from '../components/common/MenuHeaderButton';
 import { useGlassStackOptions } from './options';
 import type { DocumentsStackParamList } from './types';
 
@@ -12,7 +13,11 @@ export function DocumentsNavigator() {
 
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen name="DocumentList" component={DocumentListScreen} options={{ title: 'Documents' }} />
+      <Stack.Screen
+        name="DocumentList"
+        component={DocumentListScreen}
+        options={{ title: 'Documents', headerLeft: () => <MenuHeaderButton /> }}
+      />
       <Stack.Screen name="DocumentUpload" component={DocumentUploadScreen} options={{ title: 'Upload Document' }} />
     </Stack.Navigator>
   );
