@@ -1,19 +1,22 @@
 # Society Manager
 
-A production-grade Society Management mobile app built with **React Native (Expo)** and **Firebase**. Supports Super Admin, Society Admin, Resident, and Security roles with role-based navigation, realtime data, chat, visitor QR passes, maintenance billing, polls, events, and a document repository.
+A production-grade Society Management app built with **React Native (Expo)** and **Firebase**. Native Android/iOS is the primary target; web export is optional. Supports Super Admin, Society Admin, Resident, and Security roles with role-based navigation, realtime data, chat, visitor QR passes, maintenance billing, polls, events, and a document repository.
 
-## Tech Stack
+## Suggested Tech Stack
 
-| Concern | Choice |
+| Layer | Recommended choice |
 |---|---|
 | App framework | React Native + Expo (SDK 56, TypeScript) |
-| Backend | Firebase Spark-compatible default: Auth + Firestore + in-app notifications |
 | Navigation | React Navigation (native-stack, bottom-tabs, drawer) |
+| UI | React Native Paper + `@expo/vector-icons` |
 | State | React Context API (`AuthContext`, `ThemeContext`) |
 | Forms | React Hook Form |
-| UI | React Native Paper + `@expo/vector-icons` |
+| Backend | Firebase Auth + Firestore + in-app notifications |
 | Charts | `react-native-chart-kit` |
-| QR | `react-native-qrcode-svg` (generate), `expo-camera` (scan) |
+| QR / camera | `react-native-qrcode-svg` (generate), `expo-camera` (scan) |
+| Optional web layer | Expo web export + React Native Web, kept separate from the mobile stack |
+
+Preferred direction: keep Expo + React Native as the source of truth for the app. Only keep web-specific wrappers if browser support remains a requirement.
 
 ## Folder Structure
 
@@ -140,9 +143,9 @@ npx expo start
 
 Scan the QR with Expo Go, or press `a` / `i` for an emulator/simulator. Camera-dependent screens (QR scanning, image picking) require a physical device or a simulator with camera support.
 
-## Web Deployment
+## Optional Web Deployment
 
-This project exports as a static Expo web app. Vercel should build it with `npm run build` and serve the `dist` directory.
+This project can also export as a static Expo web app, but that build stays secondary to the mobile app. Vercel should build it with `npm run build` and serve the `dist` directory.
 
 ```bash
 npm run build
